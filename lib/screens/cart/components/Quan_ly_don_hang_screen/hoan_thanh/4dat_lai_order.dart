@@ -4,8 +4,8 @@ import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:untitled1/model/order_model.dart';
 
-class AcceptOrDenieButton extends HookConsumerWidget {
-  const AcceptOrDenieButton({
+class DatLaiOrder extends HookConsumerWidget {
+  const DatLaiOrder({
     required this.restartFunc,
     required this.order,
     Key? key,
@@ -34,45 +34,42 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                     //  TextFormField(controller: lydotucho),
                     actions: [
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // if (lydotucho.text != '') {
                             socket.emit(
-                              "tu_choi_don_hang",
+                              "dat_lai_don_hang",
                               {
                                 "senderId": order.BuyingUserId,
                                 'receiveId': order.restaurantOnwnerId,
                                 'lydo': '${lydotucho.text}',
                               },
                             );
-                            print('order.orderId huyyyyyy');
-                            print(order.orderId);
-                            ref
+// -------------------------
+                            final orderTest = await ref
                                 .read(
                                     AppStateProvider.orderTestNotifier.notifier)
-                                .getOrderandUpdate(
-                                    restaurantName: order.restaurantName,
-                                    BuyingUserName: order.BuyingUserName,
+                                .createOrderTest(
+                                    address: order.address,
                                     BuyingUserId: order.BuyingUserId,
                                     ProductId: order.ProductId,
                                     restaurantId: order.restaurantId,
-                                    productdetailsIdList:
+                                    productdetailsList:
                                         order.productdetailsIdList,
                                     toppingsList: order.toppingsList,
-                                    statusOrder: 'huy',
-                                    address: order.address,
                                     day: order.day,
                                     hour: order.hour,
                                     minute: order.minute,
-                                    orderId: order.orderId,
                                     restaurantOnwnerId:
-                                        order.restaurantOnwnerId);
-                            print('object111111111111');
-                            lydotucho.text = '';
-                            // print('222222222');
+                                        order.restaurantOnwnerId,
+                                    BuyingUserName: order.BuyingUserName,
+                                    restaurantName: order.restaurantName);
+
+                            // ----------
+
                             Navigator.pop(context);
-                            print('3333333333');
+
                             restartFunc();
-                            print('4444444444');
+
                             // } else {
                             //   CustomScaffoldMessger(
                             //     context: context,
@@ -91,7 +88,7 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                 },
               );
             },
-            child: Text('Huỷ Đơn Hàng')),
+            child: Text('Đặt Lại Đơn Hàng')),
       ],
     );
   }

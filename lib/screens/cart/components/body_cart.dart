@@ -117,8 +117,8 @@ class BodyCartItem1 extends HookConsumerWidget {
                     child: FavoriteScreen(
                         // data: data,
                         )),
-              if (isShowDeliveryScreen.value)
-                const Expanded(child: QuanLyDonHang()),
+              // if (isShowDeliveryScreen.value)
+              //   const Expanded(child: QuanLyDonHang(restartFunc: () {})),
               if (isShowHistoryScreen.value)
                 const Expanded(child: HistoryScreen()),
             ],

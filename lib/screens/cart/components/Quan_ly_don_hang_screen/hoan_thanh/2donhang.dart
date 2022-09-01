@@ -6,7 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:untitled1/components/custom_container.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import '4acceptordeniebutton.dart';
+import '4dat_lai_order.dart';
 import '3buying_product.dart';
 
 class DonHang extends HookConsumerWidget {
@@ -99,7 +99,7 @@ class DonHang extends HookConsumerWidget {
                   productQuantity: buyingProductdetauil.length,
                 );
               }),
-          AcceptOrDenieButton(
+          DatLaiOrder(
             socket: socket,
             lydotucho: lydotucho,
             order: orders,

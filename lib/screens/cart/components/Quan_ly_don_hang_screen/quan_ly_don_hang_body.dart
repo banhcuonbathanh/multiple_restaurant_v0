@@ -8,10 +8,13 @@ import 'hoan_thanh/1hoan_thanh_body.dart';
 import 'xac_nhan/1xac_nhan_body.dart';
 
 class QuanLyDonHang extends HookConsumerWidget {
-  const QuanLyDonHang({Key? key}) : super(key: key);
+  final Function restartFunc;
+  const QuanLyDonHang({required this.restartFunc, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('build QuanLyDonHang');
+    final restart = useState(true);
     final isShowChoXacNhan = useState<bool>(true);
     final isShowXacNhan = useState<bool>(false);
     final isShowHoanThanh = useState<bool>(false);
@@ -58,7 +61,11 @@ class QuanLyDonHang extends HookConsumerWidget {
           ),
           if (isShowChoXacNhan.value)
             Expanded(
-              child: ChoXacNhanBody(),
+              child: ChoXacNhanBody(
+                restartFunc: () {
+                  restartFunc();
+                },
+              ),
             ),
           if (isShowXacNhan.value)
             Expanded(
@@ -66,7 +73,11 @@ class QuanLyDonHang extends HookConsumerWidget {
             ),
           if (isShowHoanThanh.value)
             Expanded(
-              child: HoanThanhBody(),
+              child: HoanThanhBody(
+                restartFunc: () {
+                  restartFunc();
+                },
+              ),
             ),
         ],
       ),

@@ -27,13 +27,17 @@ class CustomBottomNavBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('build CustomBottomNavBar');
     final user = ref.watch(AppStateProvider.userNotifier);
     final orders = ref
         .watch(AppStateProvider.orderTestNotifier)
         .values
         .toList()
         .where((element) => element.BuyingUserId == user!.userId!);
+    final orderdathang =
+        orders.where((element) => element.statusOrder == 'dat hang').toList();
     final restart = useState<bool>(true);
+
     // print('CustomBottomNavBar');
 
     // final animationController = useValueNotifier<bool>(false);
@@ -172,7 +176,7 @@ class CustomBottomNavBar extends HookConsumerWidget {
               decoration: const BoxDecoration(
                   color: Colors.red, shape: BoxShape.circle),
               child: Text(
-                orders.length.toString(),
+                orderdathang.length.toString(),
                 style: TextStyle(color: Colors.white),
               ),
             ),

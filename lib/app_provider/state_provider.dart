@@ -60,7 +60,7 @@ abstract class AppStateProvider {
       get productMapNotifier => _productMapNotifier;
 
   static StateNotifierProvider<OrderTestState, Map<String, OrderModel>>
-      get orderTestNotifier => _orderTestNotifier;
+      get orderTestNotifier => orderTestNotifier1;
 }
 
 final _userNotifier = StateNotifierProvider<UserState, UserModel?>((ref) {
@@ -136,7 +136,7 @@ final _productMapNotifier =
     StateNotifierProvider<ProductStateMap, Map<String, ProductModel>?>((ref) {
   return ProductStateMap(ref.read, {});
 });
-final _orderTestNotifier =
+final orderTestNotifier1 =
     StateNotifierProvider<OrderTestState, Map<String, OrderModel>>((ref) {
   return OrderTestState(
     ref.read,

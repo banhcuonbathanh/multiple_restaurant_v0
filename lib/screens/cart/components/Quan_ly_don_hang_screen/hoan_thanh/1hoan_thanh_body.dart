@@ -10,15 +10,11 @@ import '../../../../../size_config.dart';
 import '2donhang.dart';
 
 class HoanThanhBody extends HookConsumerWidget {
-  const HoanThanhBody({Key? key}) : super(key: key);
+  final Function restartFunc;
+  const HoanThanhBody({required this.restartFunc, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final restart = useState(true);
-    restartFunc() {
-      restart.value = !restart.value;
-    }
-
     final userData = ref.watch(AppStateProvider.userNotifier);
     final orders = ref
         .watch(AppStateProvider.orderTestNotifier)
@@ -104,7 +100,7 @@ class HoanThanhBody extends HookConsumerWidget {
                     DonHang(
                       orders: ordersDatHang[index],
                       restartFunc: () {
-                        restart.value = !restart.value;
+                        restartFunc();
                       },
                     ),
                   SizedBox(

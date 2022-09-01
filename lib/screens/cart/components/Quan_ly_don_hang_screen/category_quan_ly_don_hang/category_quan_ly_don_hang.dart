@@ -32,7 +32,6 @@ class CategoryQuanLyDonHang extends HookConsumerWidget {
     late final LocalNotificationService service;
 
     void onNotificationListner(String? payLoad) {
-      print('asdfsdfadsfdas');
       // if (payLoad != null && payLoad.isNotEmpty) {
       //   print(payLoad);
       // }
@@ -147,6 +146,14 @@ class CategoryQuanLyDonHang extends HookConsumerWidget {
               buttonHeight: 45,
               buttonWidth: 110,
               press: () async {
+                final orderTest = await ref
+                    .read(AppStateProvider.orderTestNotifier.notifier)
+                    .searchingorderByBuyingUserId(
+                      BuyingUserId: useData!.userId!,
+                      numberOfOrder: 0,
+                      page: 0,
+                      statusOrder: 'hoan thanh',
+                    );
                 funcIsCanceled();
                 tapIndex.value = 2;
                 // await service.showNotification(

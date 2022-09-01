@@ -44,8 +44,7 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                                 'lydo': '${lydotucho.text}',
                               },
                             );
-                            print('order.orderId huyyyyyy');
-                            print(order.orderId);
+
                             ref
                                 .read(
                                     AppStateProvider.orderTestNotifier.notifier)
@@ -66,13 +65,13 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                                     orderId: order.orderId,
                                     restaurantOnwnerId:
                                         order.restaurantOnwnerId);
-                            print('object111111111111');
+
                             lydotucho.text = '';
                             // print('222222222');
                             Navigator.pop(context);
-                            print('3333333333');
+                            print('nut ok huy');
                             restartFunc();
-                            print('4444444444');
+
                             // } else {
                             //   CustomScaffoldMessger(
                             //     context: context,

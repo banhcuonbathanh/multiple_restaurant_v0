@@ -337,8 +337,6 @@ class APIOrderTest {
 
     // required String? category,
   }) async {
-    print('orderIdddddddddddddddddd');
-    print(orderId);
     // var formData = FormData.fromMap({
     //   'productdetaiId': productdetaiId,
     //   'productdetailQuantity': productdetailQuantity,
@@ -363,8 +361,6 @@ class APIOrderTest {
         // 'category': category,
       });
 
-      print('response');
-      print(response);
       final productdetaullist =
           productDetailFromJson(response.data['productdetailsList']);
 

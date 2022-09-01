@@ -104,6 +104,7 @@ class DonHang extends HookConsumerWidget {
             lydotucho: lydotucho,
             order: orders,
             restartFunc: () {
+              print('trong don hoang');
               restartFunc();
             },
           )

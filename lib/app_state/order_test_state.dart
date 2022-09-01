@@ -40,7 +40,6 @@ class OrderTestState extends StateNotifier<Map<String, OrderModel>> {
     Map<String, OrderModel> dataLocal = state;
     Map<String, OrderModel> tem = {};
     try {
-      print('createOrder trong app state');
       final response1 = await read(API.orderTest).createOrderTest(
         BuyingUserId: BuyingUserId,
         ProductId: ProductId,
