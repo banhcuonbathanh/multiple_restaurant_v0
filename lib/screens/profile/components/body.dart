@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:untitled1/app_provider/api_provider.dart';
 import 'package:untitled1/app_provider/state_provider.dart';
-import 'package:untitled1/bottombar/customerbar/testbar.dart';
+
 import 'package:untitled1/screens/sign_in/sign_in_screen.dart';
 import 'package:untitled1/size_config.dart';
 import 'dart:math' as math;

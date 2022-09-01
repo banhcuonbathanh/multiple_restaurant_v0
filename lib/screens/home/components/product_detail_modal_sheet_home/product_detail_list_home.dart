@@ -3,17 +3,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:socket_io_client/socket_io_client.dart';
+import 'package:untitled1/app_api/local_notification.dart';
 
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
 import 'package:untitled1/components/custom_buttom.dart';
 
 import 'package:untitled1/model/topping_model.dart';
+import 'package:untitled1/screens/home/home_screen.dart';
 
 import 'package:untitled1/size_config.dart';
-import 'package:swipe/swipe.dart';
+
 import 'customer_ordering_information.dart';
 import 'product_detail_one_home.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ProductDetailList_Home extends HookConsumerWidget {
   const ProductDetailList_Home({
@@ -26,9 +30,52 @@ class ProductDetailList_Home extends HookConsumerWidget {
   final String restaurantId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userData = ref.watch(AppStateProvider.userNotifier);
+    // ---------------------
+    // show notification
+    late final LocalNotificationService service;
+    void onNotificationListner(String? payLoad) {
+      print('asdfsdfadsfdas');
+      // if (payLoad != null && payLoad.isNotEmpty) {
+      //   print(payLoad);
+      // }
+      Navigator.pushNamed(context, HomeScreen.routeName);
+    }
+
+    void listenToNotification() =>
+        service.onNotificationClick.stream.listen(onNotificationListner);
+    useEffect(() {
+      service = LocalNotificationService();
+      service.intialize();
+    });
+    // ---------------------------------
+// socket Io
+    late io.Socket socket;
+    void connectAndListen() {
+      socket = io.io('http://127.0.0.1:3000',
+          OptionBuilder().setTransports(['websocket']).build());
+
+      socket.onConnect((_) {});
+      socket.emit('add_user', userData!.userId);
+      // -----------
+      socket.on('receiveOrder', (data) async {
+        print('data trong ManageRestaurantBody');
+        print(data);
+        await service.showNotification(
+            id: 0, title: ' notiication title', body: ' some nidy');
+      });
+      // --------------
+      socket.onDisconnect((_) => print('disconnect'));
+    }
+
+    useEffect(() {
+      connectAndListen();
+      return () {};
+    });
+    // --------------------------------------
     final count = useState<bool>(false);
     final newAddress = useTextEditingController();
-    final userData = ref.watch(AppStateProvider.userNotifier);
+
     final restaurantData = ref
         .watch(AppStateProvider.restaurantStateMap)
         .values
@@ -273,7 +320,11 @@ class ProductDetailList_Home extends HookConsumerWidget {
                                           BuyingUserName: userData.userName!,
                                           restaurantName:
                                               restaurantData.restaurantName!);
-
+                                  socket.emit('send_order', {
+                                    'restaurantownerId':
+                                        orderTest.restaurantOnwnerId,
+                                    'orderId': orderTest.orderId
+                                  });
                                   ref
                                       .read(
                                           Utility.disposeofhomeGetter.notifier)

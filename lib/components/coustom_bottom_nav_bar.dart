@@ -27,7 +27,6 @@ class CustomBottomNavBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('build CustomBottomNavBar');
     final user = ref.watch(AppStateProvider.userNotifier);
     final orders = ref
         .watch(AppStateProvider.orderTestNotifier)

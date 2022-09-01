@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/enums.dart';
+import 'package:untitled1/screens/home/home_screen.dart';
 
 import 'package:untitled1/screens/manage_restaurant/dat_hang/1dat_hang_body.dart';
 import 'package:untitled1/size_config.dart';
 
+import '../../app_api/local_notification.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../edit_screen/edit_product_body.dart';
 import 'da_xac_nhan/1da_xac_nhan_body.dart';
@@ -15,6 +19,7 @@ import 'hoan_thanh/1hoan_thanh_body.dart';
 import 'huy/1huy_body.dart';
 import 'phan_tich_ban_hang/phan_tich_ban_hang.dart';
 import 'restaurant_own_infomration/restaurant_owner_infomraiton.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ManageRestaurantBody extends HookConsumerWidget {
   static String routeName = "/Manage_Restaurant_Body";
@@ -22,6 +27,47 @@ class ManageRestaurantBody extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //----------------------
+    // show nitification
+
+    late final LocalNotificationService service;
+    void onNotificationListner(String? payLoad) {
+      print('asdfsdfadsfdas');
+      // if (payLoad != null && payLoad.isNotEmpty) {
+      //   print(payLoad);
+      // }
+      Navigator.pushNamed(context, HomeScreen.routeName);
+    }
+
+    void listenToNotification() =>
+        service.onNotificationClick.stream.listen(onNotificationListner);
+    useEffect(() {
+      service = LocalNotificationService();
+      service.intialize();
+    });
+    // ----------------------------------
+    // socket io
+    late io.Socket socket;
+    void connectAndListen() {
+      socket = io.io('http://127.0.0.1:3000',
+          OptionBuilder().setTransports(['websocket']).build());
+
+      socket.onConnect((_) {});
+      socket.on('receiveOrder', (data) async {
+        print('data trong ManageRestaurantBody');
+        print(data);
+        await service.showNotification(
+            id: 0, title: ' notiication title', body: ' some nidy');
+      });
+
+      socket.onDisconnect((_) => print('disconnect'));
+    }
+
+    useEffect(() {
+      connectAndListen();
+      return () {};
+    });
+    // ---------------------------
     final userData = ref.watch(AppStateProvider.userNotifier);
     final orders = ref.watch(AppStateProvider.orderTestNotifier).values;
     final ordersXacNhan = orders
