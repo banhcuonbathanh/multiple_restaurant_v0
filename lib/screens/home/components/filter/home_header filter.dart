@@ -71,8 +71,22 @@ class HomeHeaderFilter extends HookConsumerWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
-                  onChanged: (value) {
+                  onChanged: (value) async {
+                    final restaruant = await ref
+                        .read(AppStateProvider.restaurantStateMap.notifier)
+                        .searchingRestaurantWithNameLetter(nameLetters: value);
                     searchProducts(search: value);
+                    final product = await ref
+                        .read(AppStateProvider.productMapNotifier.notifier)
+                        .searchingProductWithNameLetter(nameLetters: value);
+                    searchProducts(search: value);
+                    final productdetail = await ref
+                        .read(
+                            AppStateProvider.productdetailMapNotifier.notifier)
+                        .searchingProductDetailWithNameLetter(
+                            nameLetters: value);
+                    searchProducts(search: value);
+
                     // ref
                     //     .read(Utility.searchValue.notifier)
                     //     .searchValue(searchValue: value);

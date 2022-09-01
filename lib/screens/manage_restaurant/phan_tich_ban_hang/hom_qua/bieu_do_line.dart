@@ -3,29 +3,59 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class BieuDo extends StatelessWidget {
+class BieuDoLine extends StatelessWidget {
+  final double minX;
+  final double minY;
+  final double maxX;
+  final double maxY;
+  final String title;
+  final List<double> listx;
+  final List<double> listy;
+  final List<String> caseValue;
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
-  BieuDo({Key? key}) : super(key: key);
+
+  List<FlSpot> flSpotData = [];
+
+  BieuDoLine(
+      {Key? key,
+      required this.minX,
+      required this.minY,
+      required this.maxX,
+      required this.maxY,
+      required this.title,
+      required this.listx,
+      required this.listy,
+      required this.caseValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < listx.length; i++) {
+      flSpotData.add(FlSpot(listx[i], listy[i]));
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('  data :'),
+        Text(title),
         Container(
           height: 300,
           width: double.infinity,
           child: LineChart(
             LineChartData(
-                minX: 0,
-                maxX: 11,
-                minY: 0,
-                maxY: 6,
-                titlesData: LineTitle.getTitleData(),
+                minX: minX,
+                maxX: maxX,
+                minY: minY,
+                maxY: maxY,
+                titlesData: LineTitle.getTitleData(
+                    case2: caseValue[0],
+                    case4: caseValue[1],
+                    case6: caseValue[2],
+                    case8: caseValue[3],
+                    case10: caseValue[4],
+                    case12: caseValue[5]),
                 lineBarsData: [
                   LineChartBarData(
                     dotData: FlDotData(show: true),
@@ -38,15 +68,7 @@ class BieuDo extends StatelessWidget {
                     ),
                     isCurved: true,
                     gradient: LinearGradient(colors: gradientColors),
-                    spots: [
-                      FlSpot(0, 3),
-                      FlSpot(2, 5),
-                      FlSpot(4, 4),
-                      FlSpot(6, 3),
-                      FlSpot(8, 4),
-                      FlSpot(10, 4),
-                      FlSpot(11, 5),
-                    ],
+                    spots: [...flSpotData],
                   ),
                 ],
                 gridData: FlGridData(
@@ -69,7 +91,15 @@ class BieuDo extends StatelessWidget {
 }
 
 class LineTitle {
-  static getTitleData() => FlTitlesData(
+  static getTitleData({
+    required String case2,
+    required String case4,
+    required String case6,
+    required String case8,
+    required String case10,
+    required String case12,
+  }) =>
+      FlTitlesData(
         show: true,
         bottomTitles: AxisTitles(
             sideTitles: SideTitles(
@@ -78,27 +108,34 @@ class LineTitle {
           getTitlesWidget: (value, meta) {
             switch (value.toInt()) {
               case 2:
-                return Text('mar');
+                return Text(case2);
               case 4:
-                return Text('jun');
+                return Text(case4);
+              case 6:
+                return Text(case6);
+              case 8:
+                return Text(case8);
+              case 10:
+                return Text(case10);
+              case 12:
+                return Text(case12);
             }
             return Text('');
           },
         )),
-        leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTitlesWidget: (value, meta) {
-            switch (value.toInt()) {
-              case 2:
-                return Text('mar');
-              case 4:
-                return Text('jun');
-            }
-            return Text('');
-          },
-        )),
+        // leftTitles: AxisTitles(
+        //     sideTitles: SideTitles(
+        //         showTitles: true,
+        //         reservedSize: 22,
+        //         getTitlesWidget: (value, meta) {
+        //           switch (value.toInt()) {
+        //             case 2:
+        //               return Text('x');
+        //             case 4:
+        //               return Text('jun');
+        //           }
+        //           return Text('');
+        //         })),
         topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
@@ -107,4 +144,3 @@ class LineTitle {
         ),
       );
 }
- 

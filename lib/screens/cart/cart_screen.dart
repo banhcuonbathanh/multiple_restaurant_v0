@@ -11,7 +11,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       // appBar: buildAppBar(context),
-      body: DeliveryScreen(),
+      body: QuanLyDonHang(),
       bottomNavigationBar:
           CustomBottomNavBar(selectedMenu: MenuState.favourite),
       // bottomNavigationBar: CheckoutCard(),

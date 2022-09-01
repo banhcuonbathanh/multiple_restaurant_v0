@@ -5,6 +5,7 @@ import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/enums.dart';
 
 import 'package:untitled1/screens/manage_restaurant/dat_hang/1dat_hang_body.dart';
+import 'package:untitled1/size_config.dart';
 
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../edit_screen/edit_product_body.dart';
@@ -49,7 +50,9 @@ class ManageRestaurantBody extends HookConsumerWidget {
                 Navigator.pushNamed(
                     context, DatHangBodyamnagerRestaurant.routeName);
               },
+              imageAsset: 'assets/icons/click-mobile-phone-2406.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'Đã Xác Nhận',
               pushNamed: () async {
@@ -65,7 +68,9 @@ class ManageRestaurantBody extends HookConsumerWidget {
                 Navigator.pushNamed(
                     context, DaXacNhanBodyamnagerRestaurant.routeName);
               },
+              imageAsset: 'assets/icons/NicePng_recipe-icon-png_385397.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'đơn hàng hoàn thành',
               pushNamed: () async {
@@ -81,7 +86,10 @@ class ManageRestaurantBody extends HookConsumerWidget {
                 Navigator.pushNamed(
                     context, HoanThanhBodyamnagerRestaurant.routeName);
               },
+              imageAsset:
+                  'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'đơn hàng huỷ',
               pushNamed: () async {
@@ -97,37 +105,49 @@ class ManageRestaurantBody extends HookConsumerWidget {
                 Navigator.pushNamed(
                     context, HuyBodyamnagerRestaurant.routeName);
               },
+              imageAsset:
+                  'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
             ),
+            Divider(),
             DefaultRow(
               subText: '14',
               rowName: 'Người Theo Dõi: ',
               pushNamed: () {
                 // Navigator.pushNamed(context, EditProduct.routeName);
               },
+              imageAsset: 'assets/icons/Screen Shot 2022-08-26 at 14.26.17.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'Nhà Hàng',
               pushNamed: () {
                 Navigator.pushNamed(context, EditProduct.routeName);
               },
+              imageAsset: 'assets/icons/Screen Shot 2022-08-26 at 14.26.17.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'Doanh Thu',
               pushNamed: () {
                 Navigator.pushNamed(context, DoanhThu.routeName);
               },
+              imageAsset: 'assets/icons/Screen Shot 2022-08-26 at 14.26.17.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'Phân tích bán hàng',
               pushNamed: () {
                 Navigator.pushNamed(context, PhanTichBanHang.routeName);
               },
+              imageAsset: 'assets/icons/Screen Shot 2022-08-26 at 14.26.17.png',
             ),
+            Divider(),
             DefaultRow(
               rowName: 'Hiệu quả hoạt động',
               pushNamed: () {
                 // Navigator.pushNamed(context, EditProduct.routeName);
               },
+              imageAsset: 'assets/icons/Screen Shot 2022-08-26 at 14.26.17.png',
             ),
           ],
         ),
@@ -142,26 +162,37 @@ class DefaultRow extends StatelessWidget {
   final String rowName;
   final String? subText;
   final Function pushNamed;
+  final String imageAsset;
   const DefaultRow({
     Key? key,
     required this.rowName,
     required this.pushNamed,
     this.subText,
+    required this.imageAsset,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(rowName),
-        if (subText != null) Text(subText!),
-        Spacer(),
-        IconButton(
-            onPressed: () {
-              pushNamed();
-            },
-            icon: Icon(Icons.chevron_right))
-      ],
+    return GestureDetector(
+      onTap: () {
+        pushNamed();
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
+        child: Row(
+          children: [
+            Image.asset(
+              imageAsset,
+              height: getProportionateScreenHeight(30),
+            ),
+            Text(rowName),
+            if (subText != null) Text(subText!),
+            Spacer(),
+            Icon(Icons.chevron_right)
+            // IconButton(onPressed: () {}, icon: Icon(Icons.chevron_right))
+          ],
+        ),
+      ),
     );
   }
 }

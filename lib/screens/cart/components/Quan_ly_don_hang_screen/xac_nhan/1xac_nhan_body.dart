@@ -9,8 +9,8 @@ import 'package:untitled1/model/order_model.dart';
 import '../../../../../size_config.dart';
 import '2donhang.dart';
 
-class ChoXacNhanBody extends HookConsumerWidget {
-  const ChoXacNhanBody({Key? key}) : super(key: key);
+class XacNhanBody extends HookConsumerWidget {
+  const XacNhanBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,7 +56,7 @@ class ChoXacNhanBody extends HookConsumerWidget {
         .watch(AppStateProvider.orderTestNotifier)
         .values
         .where((element) => element.BuyingUserId == userData!.userId!)
-        .where((element) => element.statusOrder == 'dat hang')
+        .where((element) => element.statusOrder == 'xac nhan')
         .toList();
     final isShowLoadingToFetch = useState(true);
     final page = useState<int>(1);
@@ -72,7 +72,7 @@ class ChoXacNhanBody extends HookConsumerWidget {
             BuyingUserId: userData!.userId!,
             numberOfOrder: ordersDatHang.length,
             page: page.value,
-            statusOrder: 'dat hang',
+            statusOrder: 'xac nhan',
           );
       if (orderTest.length < 1) {
         hasMoreData.value = false;
@@ -131,7 +131,7 @@ class ChoXacNhanBody extends HookConsumerWidget {
               ),
             )
           : Center(
-              child: Text('chua co don hang'),
+              child: Text('chua co don hang xac nhan'),
             ),
     );
   }

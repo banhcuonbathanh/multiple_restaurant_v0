@@ -20,16 +20,15 @@ class MyApp extends HookConsumerWidget {
     //     color: Colors.white,
     //   );
     // }
-    return OverlaySupport.global(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: theme(),
-        // home: SplashScreen(),
-        // We use routeName so that we dont need to remember the name
-        initialRoute: SignInScreen.routeName,
-        routes: routes,
-      ),
+    // OverlaySupport.global(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: theme(),
+      // home: SplashScreen(),
+      // We use routeName so that we dont need to remember the name
+      initialRoute: SignInScreen.routeName,
+      routes: routes,
     );
   }
 }

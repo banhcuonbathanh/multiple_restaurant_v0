@@ -328,6 +328,32 @@ class APIProductDetail {
   }
 
   // --------------------------------------------------------------------------
+  Future<List<ProductDetailModel>> searchingProductDetailWithNameLetter({
+    required String nameLetters,
+  }) async {
+    // var formData = FormData.fromMap({
+    //   'searchingkey': searchingkey,
+    // });
+    try {
+      final response = await dio.post(
+          'http://127.0.0.1:3000/productDetail/searchingProductsDetailWithNameLetter/',
+          data: {
+            'nameLetters': nameLetters,
+          });
+      // print('searchingProductDetailproductId api productdetail');
+      // print(response);
+      return productDetailFromJson(response.data);
+    } on DioError catch (e) {
+      logger.warning(e.message, e);
+      throw RepositoryException(message: e.message);
+    } on Exception catch (e, st) {
+      logger.severe('Repository Exception', e, st);
+      throw RepositoryException(
+          message: 'Repository Exception', exception: e, stackTrace: st);
+    }
+  }
+
+  // --------------------------------------------------------------------------
   Future<void> getOneandDelete(
       {required String productdetaiId, required String productId}) async {
     // var formData = FormData.fromMap({

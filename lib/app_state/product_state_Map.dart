@@ -278,7 +278,39 @@ class ProductStateMap extends StateNotifier<Map<String, ProductModel>> {
       // state = AsyncValue.error(e, stackTrace: st);
     }
   }
+// ----------------------------------------------
 
+  Future<List<ProductModel>?> searchingProductWithNameLetter({
+    required String nameLetters,
+  }) async {
+    Map<String, ProductModel> dataLocal = state;
+    Map<String, ProductModel> tem = {};
+    try {
+      // print('searchingKey');
+      // print(searchingKey);
+      final serverproducts = await read(API.product)
+          .searchingProductsWithNameLetter(nameLetters: nameLetters);
+
+      if (dataLocal.length < 1) {
+        for (final serverProduct in serverproducts) {
+          tem['${serverProduct.productId}'] = serverProduct;
+
+          // dataLocal.putIfAbsent(serverOrder.orderId, () => serverOrder);
+        }
+        state = tem;
+      } else {
+        for (final serverProduct in serverproducts) {
+          dataLocal.putIfAbsent(serverProduct.productId!, () => serverProduct);
+        }
+        state = dataLocal;
+      }
+      return serverproducts;
+    } on Exception catch (e, st) {
+      logger.severe('Repository Exception', e, st);
+      throw RepositoryException(
+          message: 'Repository Exception', exception: e, stackTrace: st);
+    }
+  }
   // void _cacheState() {
   //   previousState = state;
   // }

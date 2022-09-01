@@ -138,7 +138,7 @@ class Disposeofhome extends StateNotifier<bool> {
 class orderTimingDay extends StateNotifier<int?> {
   orderTimingDay() : super(null);
 
-  void orderday({required int day}) {
+  void orderday({int? day}) {
     state = day;
   }
 }
@@ -146,7 +146,7 @@ class orderTimingDay extends StateNotifier<int?> {
 class orderTimingHour extends StateNotifier<int?> {
   orderTimingHour() : super(null);
 
-  void orderHour({required int hour}) {
+  void orderHour({int? hour}) {
     state = hour;
   }
 }
@@ -154,7 +154,7 @@ class orderTimingHour extends StateNotifier<int?> {
 class orderTimingMinute extends StateNotifier<int?> {
   orderTimingMinute() : super(null);
 
-  void orderMinute({required int minute}) {
+  void orderMinute({int? minute}) {
     state = minute;
   }
 }

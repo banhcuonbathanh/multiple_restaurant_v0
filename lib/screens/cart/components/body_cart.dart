@@ -11,8 +11,8 @@ import 'Quan_ly_don_hang_screen/quan_ly_don_hang_body.dart';
 import 'order_screen/category_cart/cart_category.dart';
 import 'favorite_screen/favorite_screen.dart';
 
-class BodyCartItem extends HookConsumerWidget {
-  const BodyCartItem({Key? key}) : super(key: key);
+class BodyCartItem1 extends HookConsumerWidget {
+  const BodyCartItem1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -93,16 +93,6 @@ class BodyCartItem extends HookConsumerWidget {
                 funcIsShowDeliveryScreen: () {
                   selectionScreen(0);
                 },
-                // funcIsShowOrderScreen: () async {
-                //   if (setOfRestaurantIDs.length > 0) {
-                //     for (final Id in setOfRestaurantIDs) {
-                //       await ref
-                //           .read(AppStateProvider.restaurantStateMap.notifier)
-                //           .searchRestaurantID(restaurantId: Id);
-                //     }
-                //   }
-                //   selectionScreen(1);
-                // },
                 funcIsShowFavoriteScreen: () async {
                   selectionScreen(2);
                   await ref
@@ -128,7 +118,7 @@ class BodyCartItem extends HookConsumerWidget {
                         // data: data,
                         )),
               if (isShowDeliveryScreen.value)
-                const Expanded(child: DeliveryScreen()),
+                const Expanded(child: QuanLyDonHang()),
               if (isShowHistoryScreen.value)
                 const Expanded(child: HistoryScreen()),
             ],

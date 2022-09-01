@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:untitled1/app_state/utility_state.dart';
-import 'package:untitled1/app_state/utility_state.dart';
 
 abstract class Utility {
   static StateNotifierProvider<WidgetOffSet, Map<String, double>>

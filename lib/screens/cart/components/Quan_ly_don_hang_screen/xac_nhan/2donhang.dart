@@ -6,6 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:untitled1/components/custom_container.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:untitled1/size_config.dart';
 import '4acceptordeniebutton.dart';
 import '3buying_product.dart';
 
@@ -24,20 +25,6 @@ class DonHang extends HookConsumerWidget {
     late IO.Socket socket;
 // ---------------------
 
-    void connectAndListen({required String userId}) {
-      socket = IO.io(
-        'http://127.0.0.1:3000',
-        OptionBuilder().setTransports(['websocket']).build(),
-      );
-      socket.onConnect((_) {
-        socket.emit('sign_in', userId);
-      });
-      socket.onDisconnect((_) => print('disconnect'));
-    }
-
-    useEffect(() {
-      connectAndListen(userId: '62b2d37d9176c5d25ac393ab');
-    });
     // final userData = ref.watch(AppStateProvider.userNotifier);
     // final orders = ref
     //     .watch(AppStateProvider.orderTestNotifier)
@@ -99,13 +86,8 @@ class DonHang extends HookConsumerWidget {
                   productQuantity: buyingProductdetauil.length,
                 );
               }),
-          AcceptOrDenieButton(
-            socket: socket,
-            lydotucho: lydotucho,
-            order: orders,
-            restartFunc: () {
-              restartFunc();
-            },
+          SizedBox(
+            height: getProportionateScreenHeight(10),
           )
         ],
       ),

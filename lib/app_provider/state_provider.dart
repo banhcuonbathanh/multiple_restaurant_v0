@@ -3,7 +3,6 @@ import 'package:untitled1/app_state/categories_state.dart';
 import 'package:untitled1/app_state/order_state.dart';
 import 'package:untitled1/app_state/order_test_state.dart';
 
-import 'package:untitled1/app_state/product_state.dart';
 import 'package:untitled1/app_state/productdetail_edit_state.dart';
 
 import 'package:untitled1/app_state/productdetail_state_Map.dart';

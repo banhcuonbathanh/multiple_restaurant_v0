@@ -66,6 +66,8 @@ dependencies:
   align_positioned: ^3.0.0
   focused_menu: ^1.0.5
   fl_chart: ^0.55.1
+  swipeable: ^1.1.0
+  swipe: ^0.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

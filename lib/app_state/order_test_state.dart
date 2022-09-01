@@ -328,4 +328,55 @@ class OrderTestState extends StateNotifier<Map<String, OrderModel>> {
   //   _resetState();
   //   read(categoryExceptionProvider.notifier).state = e;
   // }
+
+  // ---------------------------
+
+  Future<void> getOrderandUpdate({
+    required String restaurantName,
+    required String BuyingUserName,
+    required String BuyingUserId,
+    required String ProductId,
+    required String restaurantId,
+    required List<ProductDetailModel> productdetailsIdList,
+    required List<ToppingModel> toppingsList,
+    required String statusOrder,
+    required String address,
+    required String day,
+    required String hour,
+    required String minute,
+    required String orderId,
+    required String restaurantOnwnerId,
+  }) async {
+    // _cacheState();
+
+    Map<String, OrderModel>? dataLocal = state;
+    if (dataLocal.containsKey(orderId)) {
+      dataLocal.update(orderId, (value) => value.copyWith(statusOrder: 'huy'));
+      state = dataLocal;
+      try {
+        await read(API.orderTest).getoneandupdate(
+          BuyingUserId: BuyingUserId,
+          ProductId: ProductId,
+          address: address,
+          restaurantId: restaurantId,
+          day: day,
+          hour: hour,
+          minute: minute,
+          restaurantOnwnerId: restaurantOnwnerId,
+          productdetailsIdList: productdetailsIdList,
+          toppingsList: toppingsList,
+          BuyingUserName: BuyingUserName,
+          restaurantName: restaurantName,
+          orderId: orderId,
+          statusOrder: statusOrder,
+        );
+      } on Exception catch (e, st) {
+        logger.severe('Repository Exception', e, st);
+        throw RepositoryException(
+            message: 'Repository Exception', exception: e, stackTrace: st);
+      }
+    } else {
+      return;
+    }
+  }
 }

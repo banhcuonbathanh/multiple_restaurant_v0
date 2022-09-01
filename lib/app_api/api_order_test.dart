@@ -319,63 +319,74 @@ class APIOrderTest {
   }
 
   // --------------------------------------------------------------------------
-  Future<ProductDetailModel> getoneandupdate({
-    required String? productdetaitName,
-    required String? productdetaiDescription,
-    required String? productdetaiImage,
-    required String? productdetaiId,
-    // required String? productId,
-    required double? productdetaiPrice,
-    required double? productdetaiRating,
-    required bool? productdetaiIsFavourite,
-    required bool? productdetaiIsPopular,
-    required String? productName,
-    required String? productId,
-    required double? productdetailQuantity,
-    // required double? productDetailBill,
-
-    required String? restaurantName,
-    required String? restaurantId,
-    required double? productdetailBill,
-    required String? userId,
+  Future<OrderModel> getoneandupdate({
+    required String restaurantName,
+    required String BuyingUserName,
+    required String BuyingUserId,
+    required String ProductId,
+    required String restaurantId,
+    required List<ProductDetailModel> productdetailsIdList,
+    required List<ToppingModel> toppingsList,
+    required String statusOrder,
+    required String address,
+    required String day,
+    required String hour,
+    required String minute,
+    required String orderId,
+    required String restaurantOnwnerId,
 
     // required String? category,
   }) async {
+    print('orderIdddddddddddddddddd');
+    print(orderId);
     // var formData = FormData.fromMap({
     //   'productdetaiId': productdetaiId,
     //   'productdetailQuantity': productdetailQuantity,
     //   'productdetailBill': productdetailBill,
     // });
     try {
-      final response = await dio
-          .post('http://127.0.0.1:3000/productDetail/getoneandupdate/', data: {
-        'productdetaiId': productdetaiId,
-        'productdetailQuantity': productdetailQuantity,
-        'productdetailBill': productdetailBill,
-
-        'productdetaiPrice': productdetaiPrice,
-        'productdetaitName': productdetaitName,
-
-        'productdetaiDescription': productdetaiDescription,
-        'productdetaiImage': productdetaiImage,
-        'productId': productId,
-        'productdetaiRating': productdetaiRating,
-        'productdetaiIsFavourite': productdetaiIsFavourite,
-        'productdetaiIsPopular': productdetaiIsPopular,
-        'productName': productName,
-
-        // 'ship': ship,
-        // 'booking': booking,
-        'restaurantName': restaurantName,
+      final response =
+          await dio.post('http://127.0.0.1:3000/ordertest/updateOrder/', data: {
+        'BuyingUserId': BuyingUserId,
+        'ProductId': ProductId,
+        'address': address,
         'restaurantId': restaurantId,
-        'userId': userId,
+        'day': day,
+        'hour': hour,
+        'minute': minute,
+        'restaurantOnwnerId': restaurantOnwnerId,
+        'productdetailsIdList': productdetailsIdList,
+        'toppingsList': toppingsList,
+        'BuyingUserName': BuyingUserName,
+        'restaurantName': restaurantName, 'orderTestId': orderId,
+        'statusOrder': statusOrder,
         // 'category': category,
       });
 
-      // print(
-      //     'getoneandupdategetoneandupdate  APIProductDetailServiceAPIProductDetailService');
-      // print(productdetailQuantity);
-      return ProductDetailModel.fromJson(response.data);
+      print('response');
+      print(response);
+      final productdetaullist =
+          productDetailFromJson(response.data['productdetailsList']);
+
+      final toppinglist = toppingsFromJson(response.data['toppingsList']);
+
+      OrderModel test1 = OrderModel(
+        address: response.data['address'],
+        day: response.data['day'],
+        BuyingUserId: response.data['BuyingUserId'],
+        hour: response.data['hour'],
+        minute: response.data['minute'],
+        orderId: response.data['orderTestId'],
+        productdetailsIdList: productdetaullist,
+        ProductId: response.data['ProductId'],
+        restaurantId: response.data['restaurantId'],
+        restaurantOnwnerId: response.data['restaurantOnwnerId'],
+        statusOrder: response.data['statusOrder'],
+        toppingsList: toppinglist,
+        BuyingUserName: response.data['BuyingUserName'],
+        restaurantName: response.data['restaurantName'],
+      );
+      return test1;
     } on DioError catch (e) {
       logger.warning(e.message, e);
       throw RepositoryException(message: e.message);

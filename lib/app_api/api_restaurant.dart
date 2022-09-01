@@ -138,19 +138,21 @@ class APIRestaurant {
   }
 
 // --------------------------------------------------------------------------
-  Future<RestaurantModel> searchingRestaurant({
-    required String? searchingKey,
+  Future<List<RestaurantModel>> searchingRestaurantWithNameLetter({
+    required String nameLetters,
   }) async {
     try {
       try {
         final response = await dio.post(
-            'http://127.0.0.1:3000/restaurant/searchingRestaurant/',
+            'http://127.0.0.1:3000/restaurant/searchingRestaurantWithNameLetter/',
             data: {
-              'searchingKey': searchingKey,
+              'nameLetters': nameLetters,
             });
+        final List<RestaurantModel> listRestaurant =
+            restaurantsFromJson(response.data);
         // print('response.toString() searchingRestaurant ');
         // print(response.toString());
-        return RestaurantModel.fromJson(response.data);
+        return listRestaurant;
       } on DioError catch (e) {
         throw Exception(' failed to create restaurant');
       }

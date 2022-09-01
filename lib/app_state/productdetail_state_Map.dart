@@ -150,4 +150,53 @@ class ProductDetailMapState
     });
     return fiteltr;
   }
+
+  // ----------------------------------------------
+
+  Future<List<ProductDetailModel>> searchingProductDetailWithNameLetter({
+    required String nameLetters,
+  }) async {
+    Map<String, ProductDetailModel> dataLocal = state;
+    Map<String, ProductDetailModel> tem = {};
+    try {
+      // print('searchingKey');
+      // print(searchingKey);
+      final serverproducts = await read(API.productdetail)
+          .searchingProductDetailWithNameLetter(nameLetters: nameLetters);
+
+      if (dataLocal.length < 1) {
+        for (final serverProduct in serverproducts) {
+          tem['${serverProduct.productId}'] = serverProduct;
+
+          // dataLocal.putIfAbsent(serverOrder.orderId, () => serverOrder);
+        }
+        state = tem;
+      } else {
+        for (final serverProduct in serverproducts) {
+          dataLocal.putIfAbsent(serverProduct.productId!, () => serverProduct);
+        }
+        state = dataLocal;
+      }
+      return serverproducts;
+    } on Exception catch (e, st) {
+      logger.severe('Repository Exception', e, st);
+      throw RepositoryException(
+          message: 'Repository Exception', exception: e, stackTrace: st);
+    }
+  }
+
+  // ----------------------------------------------
+
+  Future<void> resetProductDetail({
+    required String productdetailId,
+  }) async {
+    Map<String, ProductDetailModel> dataLocal = state;
+
+    if (dataLocal.containsKey(productdetailId)) {
+      dataLocal.update(
+          productdetailId, (value) => value.copyWith(productdetailQuantity: 0));
+    } else {
+      return;
+    }
+  }
 }

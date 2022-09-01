@@ -21,11 +21,14 @@ class PhanTichBanHang extends StatelessWidget {
         ),
       ),
       body: Column(
+        // shrinkWrap: true,
         children: [
           CategoryPhanTichDonHang(
               funcHomQua: () {}, func7Ngay: () {}, func30Ngay: () {}),
           Divider(),
-          HomQuaBody(),
+          Expanded(
+            child: HomQuaBody(),
+          ),
         ],
       ),
     );

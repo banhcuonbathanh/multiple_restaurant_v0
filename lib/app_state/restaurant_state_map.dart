@@ -262,6 +262,45 @@ class RestaurantStateMap extends StateNotifier<Map<String, RestaurantModel>> {
   }
 
 // --------------------------------
+
+// ---------------------------------------------------------
+  Future<List<RestaurantModel>> searchingRestaurantWithNameLetter({
+    required String nameLetters,
+  }) async {
+    Map<String, RestaurantModel>? dataLocal = state;
+    if (dataLocal.length < 1) {
+      // print('state.value == null');
+      try {
+        final restaurantsServer = await read(API.restaurant)
+            .searchingRestaurantWithNameLetter(nameLetters: '');
+        Map<String, RestaurantModel> temporary = {};
+        restaurantsServer.forEach((element) {
+          temporary['${element.restaurantId}'] = element;
+        });
+        state = temporary;
+        return restaurantsServer;
+      } on Exception catch (e, st) {
+        logger.severe('Repository Exception', e, st);
+        throw RepositoryException(
+            message: 'Repository Exception', exception: e, stackTrace: st);
+      }
+    } else {
+      // print('state.value !!!!!= null');
+
+      try {
+        final restaurantsServer = await read(API.restaurant)
+            .searchingRestaurantWithNameLetter(nameLetters: '');
+        for (final restaurant in restaurantsServer) {
+          dataLocal.putIfAbsent(restaurant.restaurantId!, () => restaurant);
+        }
+        return restaurantsServer;
+      } on Exception catch (e, st) {
+        logger.severe('Repository Exception', e, st);
+        throw RepositoryException(
+            message: 'Repository Exception', exception: e, stackTrace: st);
+      }
+    }
+  }
 // testtesttesttesttesttesttesttesttesttesttesttest
 
   // Future<List<RestaurantModel>> getAllRestaurant_test() async {

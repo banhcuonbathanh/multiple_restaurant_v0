@@ -151,6 +151,7 @@ class APIProduct {
     await dio.post("http://127.0.0.1:3000/upload/product", data: formdata);
   }
 
+// -----------------------------------------------
   Future<List<ProductModel>> getAllProduct() async {
     try {
       final response =
@@ -337,6 +338,25 @@ class APIProduct {
       // return ProductModel.fromJson(response.data);
     } on DioError catch (e) {
       throw Exception(' failed to get one and update');
+    }
+  }
+
+// -----------------------------------------------
+  Future<List<ProductModel>> searchingProductsWithNameLetter({
+    required String nameLetters,
+  }) async {
+    try {
+      final response = await dio.post(
+          "http://127.0.0.1:3000/product/searchingProductsWithNameLetter/",
+          data: {
+            'nameLetters': nameLetters,
+          });
+      // print(response);
+      final List<ProductModel> listProduct = productFromJson(response.data);
+
+      return listProduct;
+    } on DioError catch (e) {
+      throw Exception(' failed to get category');
     }
   }
 }

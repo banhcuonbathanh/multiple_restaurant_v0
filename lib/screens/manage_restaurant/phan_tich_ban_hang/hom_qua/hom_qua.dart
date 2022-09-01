@@ -5,7 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:untitled1/size_config.dart';
 
-import 'bieu_do.dart';
+import 'bieu_do_line.dart';
+import 'pie_chart.dart';
 
 class HomQuaBody extends HookConsumerWidget {
   const HomQuaBody({Key? key}) : super(key: key);
@@ -25,7 +26,24 @@ class HomQuaBody extends HookConsumerWidget {
         ),
         RowNumber2(buttonIndex: buttonIndex),
         Divider(),
-        BieuDo(),
+        BieuDoLine(
+          maxX: 12,
+          maxY: 10,
+          minX: 0,
+          minY: 0,
+          title: 'don hang hom qua:',
+          listy: [2, 10, 4, 8, 6, 7],
+          listx: [0, 2, 4, 6, 8, 10],
+          caseValue: [
+            '1',
+            '2',
+            '1',
+            '2',
+            '1',
+            '2',
+          ],
+        ),
+        Pie_chart(),
       ],
     );
   }

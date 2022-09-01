@@ -181,29 +181,6 @@ class ProductState extends StateNotifier<List<ProductModel>> {
         else
           product
     ];
-    // state = state.whenData((products) {
-    //   return [
-    //     for (final product in products)
-    //       if (product.productId == productId)
-    //         ProductModel(
-    //             productName: productName,
-    //             // productDescription: productDescription,
-    //             productImage: productImage,
-    //             productId: productId,
-    //             productPriceThapNhat: productPriceThapNhat,
-    //             productPriceCaoNhat: productPriceCaoNhat,
-    //             productRating: productRating,
-    //             isFavourite: isFavourite,
-    //             isPopular: isPopular,
-    //             // ship: ship,
-    //             // booking: booking,
-    //             restaurantName: restaurantName,
-    //             restaurantId: restaurantId,
-    //             productdetailIdList: productdetailIdList)
-    //       else
-    //         product
-    //   ];
-    // });
 
     try {
       await read(API.product).getoneandupdate(
