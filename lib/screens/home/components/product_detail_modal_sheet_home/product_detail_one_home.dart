@@ -8,7 +8,7 @@ import 'package:untitled1/components/custom_buttom.dart';
 import 'package:untitled1/components/custom_container.dart';
 import 'package:untitled1/constants.dart';
 import 'package:untitled1/model/productdetail_model.dart';
-import 'package:untitled1/model/topping_model.dart';
+
 import 'package:untitled1/size_config.dart';
 
 import 'topping_with_inform_home.dart';
@@ -71,6 +71,14 @@ class ProductDetailOneHome extends HookConsumerWidget {
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),
+                      if (ProductDetailData.promotion != null)
+                        Text(
+                          'KM: ${ProductDetailData.promotion.toString()} %',
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
                       Text('Thanh Phan'),
                       SizedBox(
                         height: getProportionateScreenHeight(10),
@@ -109,11 +117,45 @@ class ProductDetailOneHome extends HookConsumerWidget {
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),
-                      Text(ProductDetailData.productdetaiPrice!.toString()),
+                      RichText(
+                        text: TextSpan(
+                          text: ProductDetailData.productdetaiPrice!.toString(),
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            if (ProductDetailData.promotion != null)
+                              TextSpan(
+                                  text: ' x ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10)),
+                            if (ProductDetailData.promotion != null)
+                              TextSpan(
+                                  text: ProductDetailData.promotion!.toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.red)),
+                            if (ProductDetailData.promotion != null)
+                              TextSpan(
+                                  text: '%',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.red)),
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),
-                      Text(ProductDetailData.productdetailBill.toString()),
+                      if (ProductDetailData.promotion != null)
+                        Text(((ProductDetailData.productdetailBill!) *
+                                (ProductDetailData.promotion!) /
+                                100)
+                            .toString()),
+                      if (ProductDetailData.promotion == null)
+                        Text(((ProductDetailData.productdetailBill!)
+                            .toString())),
                       SizedBox(
                         height: getProportionateScreenHeight(10),
                       ),

@@ -9,9 +9,10 @@ import 'package:untitled1/model/order_model.dart';
 import '../../../../../size_config.dart';
 import '2donhang.dart';
 
-class DatHangBodyamnagerRestaurant extends HookConsumerWidget {
-  static String routeName = "/DatHangBodyamnagerRestaurant";
-  const DatHangBodyamnagerRestaurant({Key? key}) : super(key: key);
+class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
+  final Function restartFunc;
+  const HoanThanhBodyamnagerRestaurant({required this.restartFunc, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,8 +58,9 @@ class DatHangBodyamnagerRestaurant extends HookConsumerWidget {
         .watch(AppStateProvider.orderTestNotifier)
         .values
         .where((element) => element.BuyingUserId == userData!.userId!)
-        .where((element) => element.statusOrder == 'dat hang')
+        .where((element) => element.statusOrder == 'hoan thanh')
         .toList();
+
     final isShowLoadingToFetch = useState(true);
     final page = useState<int>(1);
     bool isLodingMore = false;
@@ -73,7 +75,7 @@ class DatHangBodyamnagerRestaurant extends HookConsumerWidget {
             BuyingUserId: userData!.userId!,
             numberOfOrder: ordersDatHang.length,
             page: page.value,
-            statusOrder: 'dat hang',
+            statusOrder: 'hoan thanh',
           );
       if (orderTest.length < 1) {
         hasMoreData.value = false;
@@ -91,44 +93,39 @@ class DatHangBodyamnagerRestaurant extends HookConsumerWidget {
       }
     });
     // --------------------------
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Đơn Đặt Hàng', style: TextStyle(color: Colors.black)),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          controller: scroller,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // -------------
+    return SafeArea(
+      child: SingleChildScrollView(
+        controller: scroller,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // -------------
 
-              for (int index = 0; index < ordersDatHang.length; index++)
-                DonHang(
-                  orders: ordersDatHang[index],
-                ),
-              SizedBox(
-                width: getProportionateScreenWidth(10),
+            for (int index = 0; index < ordersDatHang.length; index++)
+              DonHang(
+                orders: ordersDatHang[index],
               ),
-              if (!isShowLoadingToFetch.value)
-                Center(
-                  child: hasMoreData.value
-                      ? CircularProgressIndicator()
-                      : Text('no data to load'),
-                ),
-              // --------
-              // ListView.builder(
-              //     shrinkWrap: true,
-              //     primary: false,
-              //     itemCount: orders.length,
-              //     itemBuilder: (context, index) {
-              //       final order = orders[index];
-              //       return DonHang(
-              //         orders: order,
-              //       );
-              //     }),
-            ],
-          ),
+            SizedBox(
+              width: getProportionateScreenWidth(10),
+            ),
+            if (!isShowLoadingToFetch.value)
+              Center(
+                child: hasMoreData.value
+                    ? CircularProgressIndicator()
+                    : Text('no data to load'),
+              ),
+            // --------
+            // ListView.builder(
+            //     shrinkWrap: true,
+            //     primary: false,
+            //     itemCount: orders.length,
+            //     itemBuilder: (context, index) {
+            //       final order = orders[index];
+            //       return DonHang(
+            //         orders: order,
+            //       );
+            //     }),
+          ],
         ),
       ),
     );

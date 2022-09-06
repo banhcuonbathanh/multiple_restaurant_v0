@@ -3,6 +3,8 @@ import 'package:untitled1/app_provider/api_provider.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
 import 'package:untitled1/exception/repository_exception.dart';
 import 'package:untitled1/model/productdetail_model.dart';
+import 'package:untitled1/screens/edit_screen/product_detail_modal_sheet.dart/product_detail_one_edit_no_infor/row_product_detail_promotion_with_no_infor.dart';
+import 'package:untitled1/screens/home/components/promotion/promotion.dart';
 import 'package:untitled1/utils.dart';
 
 class ProductDetailMapState
@@ -109,8 +111,9 @@ class ProductDetailMapState
         productdetaiId,
         (value) => value.copyWith(
             productdetailQuantity: value.productdetailQuantity! + 1,
-            productdetailBill:
-                (value.productdetailQuantity! + 1) * value.productdetaiPrice!));
+            productdetailBill: (value.productdetailQuantity! + 1) *
+                (value.productdetaiPrice!) *
+                (value.promotion == null ? 1 : value.promotion! / 100)));
 
     state = dataLocal;
   }
@@ -130,7 +133,8 @@ class ProductDetailMapState
             productdetailBill: (value.productdetailQuantity! > 0
                     ? value.productdetailQuantity! - 1
                     : 0) *
-                value.productdetaiPrice!));
+                value.productdetaiPrice! *
+                (value.promotion == null ? 1 : value.promotion! / 100)));
 
     state = dataLocal;
   }

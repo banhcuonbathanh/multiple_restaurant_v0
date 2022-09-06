@@ -1,21 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/model/productdetail_model.dart';
 
 import 'package:untitled1/screens/cart/components/history_screen/history_screen.dart';
 
 import 'package:untitled1/size_config.dart';
-import 'Quan_ly_don_hang_screen/quan_ly_don_hang_body.dart';
+import '../../../app_api/local_notification.dart';
+import '../../home/home_screen.dart';
+
 import 'order_screen/category_cart/cart_category.dart';
 import 'favorite_screen/favorite_screen.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class BodyCartItem1 extends HookConsumerWidget {
   const BodyCartItem1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // late final LocalNotificationService service;
+    // void onNotificationListner(String? payLoad) {
+    //   print('asdfsdfadsfdas');
+    //   // if (payLoad != null && payLoad.isNotEmpty) {
+    //   //   print(payLoad);
+    //   // }
+    //   Navigator.pushNamed(context, HomeScreen.routeName);
+    // }
+
+    // void listenToNotification() =>
+    //     service.onNotificationClick.stream.listen(onNotificationListner);
+    // useEffect(() {
+    //   service = LocalNotificationService();
+    //   service.intialize();
+    // });
+    // // ----------------------------------
+    // // socket io
+    // late io.Socket socket;
+    // void connectAndListen() {
+    //   socket = io.io('http://127.0.0.1:3000',
+    //       OptionBuilder().setTransports(['websocket']).build());
+
+    //   socket.onConnect((_) {});
+    //   socket.on('receiveOrder', (data) async {
+    //     await service.showNotification(
+    //         id: 0, title: ' notiication title', body: ' some nidy');
+    //   });
+
+    //   socket.onDisconnect((_) => print('disconnect'));
+    // }
+
+    // useEffect(() {
+    //   connectAndListen();
+    //   return () {};
+    // });
+    // // ---------------------------
     // List<ProductDetail> data;
     // final listCartItem = ref.watch(CartItemNotifierProvider);
     List<ProductDetailModel>? orderedProductdetails = ref

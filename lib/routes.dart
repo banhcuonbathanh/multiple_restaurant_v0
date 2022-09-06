@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:untitled1/screens/manage_restaurant/dat_hang/1dat_hang_body.dart';
 
 import 'screens/cart/cart_screen.dart';
 
@@ -8,9 +7,11 @@ import 'screens/forgot_password/forgot_password_screen.dart';
 import 'screens/home/home_screen.dart';
 
 import 'screens/manage_restaurant/da_xac_nhan/1da_xac_nhan_body.dart';
+
 import 'screens/manage_restaurant/doanh_thu/doanh_thu.dart';
-import 'screens/manage_restaurant/hoan_thanh/1hoan_thanh_body.dart';
-import 'screens/manage_restaurant/huy/1huy_body.dart';
+
+import 'screens/manage_restaurant/don_hang/don_hang_body.dart';
+
 import 'screens/manage_restaurant/manage_restaurant_body.dart';
 
 import 'screens/manage_restaurant/phan_tich_ban_hang/phan_tich_ban_hang.dart';
@@ -21,11 +22,10 @@ import 'screens/sign_up/sign_up_screen.dart';
 // We use name route
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
-  HuyBodyamnagerRestaurant.routeName: (context) => HuyBodyamnagerRestaurant(),
-  HoanThanhBodyamnagerRestaurant.routeName: (context) =>
-      HoanThanhBodyamnagerRestaurant(),
-  DatHangBodyamnagerRestaurant.routeName: (context) =>
-      DatHangBodyamnagerRestaurant(),
+  DonHangBody.routeName: (context) => DonHangBody(),
+
+  // DatHangBodyamnagerRestaurant.routeName: (context) =>
+  //     DatHangBodyamnagerRestaurant(),
   ManageRestaurantBody.routeName: (context) => ManageRestaurantBody(),
   DaXacNhanBodyamnagerRestaurant.routeName: (context) =>
       DaXacNhanBodyamnagerRestaurant(),

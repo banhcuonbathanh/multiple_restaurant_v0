@@ -6,6 +6,7 @@ import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/components/custom_container.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:untitled1/size_config.dart';
 import '4acceptordeniebutton.dart';
 import '3buying_product.dart';
 
@@ -98,7 +99,10 @@ class DonHang extends HookConsumerWidget {
                   productQuantity: buyingProductdetauil.length,
                 );
               }),
-          AcceptOrDenieButton(socket: socket, lydotucho: lydotucho)
+          SizedBox(
+            height: getProportionateScreenHeight(10),
+          )
+          // AcceptOrDenieButton(socket: socket, lydotucho: lydotucho)
         ],
       ),
     );

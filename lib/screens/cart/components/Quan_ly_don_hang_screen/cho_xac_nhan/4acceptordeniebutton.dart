@@ -34,7 +34,7 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                     //  TextFormField(controller: lydotucho),
                     actions: [
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // if (lydotucho.text != '') {
                             socket.emit(
                               "tu_choi_don_hang",
@@ -45,7 +45,7 @@ class AcceptOrDenieButton extends HookConsumerWidget {
                               },
                             );
 
-                            ref
+                            await ref
                                 .read(
                                     AppStateProvider.orderTestNotifier.notifier)
                                 .getOrderandUpdate(

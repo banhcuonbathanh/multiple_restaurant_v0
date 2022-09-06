@@ -9,9 +9,9 @@ import 'package:untitled1/model/order_model.dart';
 import '../../../../../size_config.dart';
 import '2donhang.dart';
 
-class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
-  static String routeName = "/HoanThanhBodyamnagerRestaurant";
-  const HoanThanhBodyamnagerRestaurant({Key? key}) : super(key: key);
+class DatHangBody extends HookConsumerWidget {
+  final Function restartFunc;
+  const DatHangBody({required this.restartFunc, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,14 +21,13 @@ class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
     }
 
     final userData = ref.watch(AppStateProvider.userNotifier);
-    final orders = ref
-        .watch(AppStateProvider.orderTestNotifier)
-        .values
-        .toList()
-        .where((element) => element.BuyingUserId == userData!.userId!)
-        .toList();
+    // final orders1 = ref
+    //     .watch(AppStateProvider.orderTestNotifier)
+    //     .values
+    //     .toList()
+    //     .where((element) => element.BuyingUserId == userData!.userId!)
+    //     .toList();
 
-    final isShowListOrder = useState(true);
     int compareString(
         {required bool ascending,
         required String value1,
@@ -57,7 +56,7 @@ class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
         .watch(AppStateProvider.orderTestNotifier)
         .values
         .where((element) => element.BuyingUserId == userData!.userId!)
-        .where((element) => element.statusOrder == 'hoan thanh')
+        .where((element) => element.statusOrder == 'dat hang')
         .toList();
     final isShowLoadingToFetch = useState(true);
     final page = useState<int>(1);
@@ -73,7 +72,7 @@ class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
             BuyingUserId: userData!.userId!,
             numberOfOrder: ordersDatHang.length,
             page: page.value,
-            statusOrder: 'hoan thanh',
+            statusOrder: 'dat hang',
           );
       if (orderTest.length < 1) {
         hasMoreData.value = false;
@@ -91,47 +90,44 @@ class HoanThanhBodyamnagerRestaurant extends HookConsumerWidget {
       }
     });
     // --------------------------
-    return Scaffold(
-      appBar: AppBar(
-        title:
-            Text('Đơn Hàng Hoàn Thành', style: TextStyle(color: Colors.black)),
-      ),
-      body: SafeArea(
+    return SafeArea(
         child: SingleChildScrollView(
-          controller: scroller,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // -------------
+      controller: scroller,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (ordersDatHang.length == 0) Text('chua co don dat hang'),
+          // -------------
 
-              for (int index = 0; index < ordersDatHang.length; index++)
-                DonHang(
-                  orders: ordersDatHang[index],
-                ),
-              SizedBox(
-                width: getProportionateScreenWidth(10),
-              ),
-              if (!isShowLoadingToFetch.value)
-                Center(
-                  child: hasMoreData.value
-                      ? CircularProgressIndicator()
-                      : Text('no data to load'),
-                ),
-              // --------
-              // ListView.builder(
-              //     shrinkWrap: true,
-              //     primary: false,
-              //     itemCount: orders.length,
-              //     itemBuilder: (context, index) {
-              //       final order = orders[index];
-              //       return DonHang(
-              //         orders: order,
-              //       );
-              //     }),
-            ],
+          for (int index = 0; index < ordersDatHang.length; index++)
+            DonHang(
+              orders: ordersDatHang[index],
+              restartFun: () {
+                restartFunc();
+              },
+            ),
+          SizedBox(
+            width: getProportionateScreenWidth(10),
           ),
-        ),
+          if (!isShowLoadingToFetch.value)
+            Center(
+              child: hasMoreData.value
+                  ? CircularProgressIndicator()
+                  : Text('no data to load'),
+            ),
+          // --------
+          // ListView.builder(
+          //     shrinkWrap: true,
+          //     primary: false,
+          //     itemCount: orders.length,
+          //     itemBuilder: (context, index) {
+          //       final order = orders[index];
+          //       return DonHang(
+          //         orders: order,
+          //       );
+          //     }),
+        ],
       ),
-    );
+    ));
   }
 }

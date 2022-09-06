@@ -59,10 +59,10 @@ class ProductDetailList_Home extends HookConsumerWidget {
       socket.emit('add_user', userData!.userId);
       // -----------
       socket.on('receiveOrder', (data) async {
-        print('data trong ManageRestaurantBody');
-        print(data);
-        await service.showNotification(
-            id: 0, title: ' notiication title', body: ' some nidy');
+        // await service.showNotification(
+        //     id: 0,
+        //     title: ' notiication titleasfdasdf',
+        //     body: ' some nidy111111111111111');
       });
       // --------------
       socket.onDisconnect((_) => print('disconnect'));

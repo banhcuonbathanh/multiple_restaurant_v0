@@ -10,8 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:untitled1/model/productdetail_model.dart';
 
 import 'package:untitled1/size_config.dart';
-
-import '../../home/components/product_detail_modal_sheet_home/topping_with_inform_home.dart';
+import '../../../home/components/product_detail_modal_sheet_home/topping_with_inform_home.dart';
 import '4acceptordeniebutton.dart';
 
 class BuyingProduct extends HookConsumerWidget {

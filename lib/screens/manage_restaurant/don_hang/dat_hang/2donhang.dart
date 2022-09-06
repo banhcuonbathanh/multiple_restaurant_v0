@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-
+import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/components/custom_container.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -11,12 +11,12 @@ import '3buying_product.dart';
 
 class DonHang extends HookConsumerWidget {
   const DonHang({
-    required this.restartFunc,
+    required this.restartFun,
     required this.orders,
     Key? key,
   }) : super(key: key);
   final OrderModel orders;
-  final Function restartFunc;
+  final Function restartFun;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final buyingProductdetauil = orders.productdetailsIdList;
@@ -103,8 +103,8 @@ class DonHang extends HookConsumerWidget {
             socket: socket,
             lydotucho: lydotucho,
             order: orders,
-            restartFunc: () {
-              restartFunc();
+            restartFun: () {
+              restartFun();
             },
           )
         ],

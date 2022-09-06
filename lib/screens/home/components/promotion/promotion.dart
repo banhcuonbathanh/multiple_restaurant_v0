@@ -6,6 +6,8 @@ import 'package:untitled1/components/custom_buttom.dart';
 import 'package:untitled1/model/product_model.dart';
 
 import 'package:untitled1/model/restaurant_model.dart';
+
+import '../../../../components/promotionItem.dart';
 import '../../../../size_config.dart';
 import '../filter/item_filter_restaurant.dart';
 import '../list_all_restaurant_product/one_restaurant.dart';
@@ -204,23 +206,32 @@ class PromotionRestaurant extends HookConsumerWidget {
             });
       },
       child: PromotionItem(
-        promotionRestaurant: promotionRestaurant[index],
+        picture: promotionRestaurant[index].restaurantImage!,
+        promotionList: promotionRestaurant[index].promotionList!,
+        pictureHeight: 100,
+        pictureWith: 200,
       ),
     );
   }
 }
 
-class PromotionItem extends StatelessWidget {
-  const PromotionItem({
+class PromotionItem1 extends StatelessWidget {
+  const PromotionItem1({
     Key? key,
-    required this.promotionRestaurant,
+    required this.promotionList,
+    required this.picture,
+    required this.pictureWith,
+    required this.pictureHeight,
   }) : super(key: key);
 
-  final RestaurantModel promotionRestaurant;
-
+  // final RestaurantModel promotionRestaurant;
+  final List<int?> promotionList;
+  final String picture;
+  final double pictureWith;
+  final double pictureHeight;
   @override
   Widget build(BuildContext context) {
-    final promotionList = promotionRestaurant.promotionList!;
+    // final promotionList = promotionRestaurant.promotionList!;
     promotionList.sort();
 
     return Padding(
@@ -229,12 +240,12 @@ class PromotionItem extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox(
-            width: getProportionateScreenWidth(200),
-            height: getProportionateScreenWidth(100),
+            width: getProportionateScreenWidth(pictureWith),
+            height: getProportionateScreenWidth(pictureHeight),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                promotionRestaurant.restaurantImage!,
+                picture,
                 fit: BoxFit.fill,
               ),
             ),
@@ -244,8 +255,7 @@ class PromotionItem extends StatelessWidget {
             top: getProportionateScreenHeight(0),
             child: ClipRRect(
               borderRadius: BorderRadius.only(topRight: Radius.circular(17)),
-              child: Text(
-                  promotionRestaurant.promotionList!.last.toString() + ' %',
+              child: Text(promotionList.last.toString() + ' %',
                   style: TextStyle(
                     backgroundColor: Colors.orange.withOpacity(0.7),
                     fontSize: 15,

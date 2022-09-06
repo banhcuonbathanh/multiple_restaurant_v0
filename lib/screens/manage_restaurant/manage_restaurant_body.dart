@@ -7,16 +7,18 @@ import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/enums.dart';
 import 'package:untitled1/screens/home/home_screen.dart';
 
-import 'package:untitled1/screens/manage_restaurant/dat_hang/1dat_hang_body.dart';
 import 'package:untitled1/size_config.dart';
 
 import '../../app_api/local_notification.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../edit_screen/edit_product_body.dart';
 import 'da_xac_nhan/1da_xac_nhan_body.dart';
+
 import 'doanh_thu/doanh_thu.dart';
-import 'hoan_thanh/1hoan_thanh_body.dart';
-import 'huy/1huy_body.dart';
+
+import 'don_hang/don_hang_body.dart';
+
+import 'don_hang/huy/1huy_body.dart';
 import 'phan_tich_ban_hang/phan_tich_ban_hang.dart';
 import 'restaurant_own_infomration/restaurant_owner_infomraiton.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -32,7 +34,6 @@ class ManageRestaurantBody extends HookConsumerWidget {
 
     late final LocalNotificationService service;
     void onNotificationListner(String? payLoad) {
-      print('asdfsdfadsfdas');
       // if (payLoad != null && payLoad.isNotEmpty) {
       //   print(payLoad);
       // }
@@ -54,10 +55,10 @@ class ManageRestaurantBody extends HookConsumerWidget {
 
       socket.onConnect((_) {});
       socket.on('receiveOrder', (data) async {
-        print('data trong ManageRestaurantBody');
-        print(data);
         await service.showNotification(
-            id: 0, title: ' notiication title', body: ' some nidy');
+            id: 0,
+            title: ' notiication titleZSdasdasdada',
+            body: ' some nidyawfasdfsdfsadfsd');
       });
 
       socket.onDisconnect((_) => print('disconnect'));
@@ -82,6 +83,10 @@ class ManageRestaurantBody extends HookConsumerWidget {
         .where((element) => element.BuyingUserId == userData!.userId)
         .where((element) => element.statusOrder == 'huy')
         .toList();
+    final orderDatHang = orders
+        .where((element) => element.BuyingUserId == userData!.userId)
+        .where((element) => element.statusOrder == 'dat hang')
+        .toList();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -91,69 +96,67 @@ class ManageRestaurantBody extends HookConsumerWidget {
             RestaurantOwnerInformation(userData: userData),
             Divider(),
             DefaultRow(
-              rowName: 'Đơn Đặt Hàng',
-              pushNamed: () {
-                Navigator.pushNamed(
-                    context, DatHangBodyamnagerRestaurant.routeName);
+              rowName: 'Đơn Hàng: ',
+              subText: orderDatHang.length.toString(),
+              pushNamed: () async {
+                Navigator.pushNamed(context, DonHangBody.routeName);
               },
               imageAsset: 'assets/icons/click-mobile-phone-2406.png',
             ),
             Divider(),
-            DefaultRow(
-              rowName: 'Đã Xác Nhận',
-              pushNamed: () async {
-                if (ordersXacNhan.length < 3) {
-                  final orderTest = await ref
-                      .read(AppStateProvider.orderTestNotifier.notifier)
-                      .searchingorderByBuyingUserId(
-                          BuyingUserId: userData!.userId!,
-                          numberOfOrder: 0,
-                          page: 0,
-                          statusOrder: 'xac nhan');
-                }
-                Navigator.pushNamed(
-                    context, DaXacNhanBodyamnagerRestaurant.routeName);
-              },
-              imageAsset: 'assets/icons/NicePng_recipe-icon-png_385397.png',
-            ),
-            Divider(),
-            DefaultRow(
-              rowName: 'đơn hàng hoàn thành',
-              pushNamed: () async {
-                if (ordersHoanThanh.length < 3) {
-                  final orderTest = await ref
-                      .read(AppStateProvider.orderTestNotifier.notifier)
-                      .searchingorderByBuyingUserId(
-                          BuyingUserId: userData!.userId!,
-                          numberOfOrder: 0,
-                          page: 0,
-                          statusOrder: 'hoan thanh');
-                }
-                Navigator.pushNamed(
-                    context, HoanThanhBodyamnagerRestaurant.routeName);
-              },
-              imageAsset:
-                  'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
-            ),
-            Divider(),
-            DefaultRow(
-              rowName: 'đơn hàng huỷ',
-              pushNamed: () async {
-                if (ordersHuy.length < 3) {
-                  final orderTest = await ref
-                      .read(AppStateProvider.orderTestNotifier.notifier)
-                      .searchingorderByBuyingUserId(
-                          BuyingUserId: userData!.userId!,
-                          numberOfOrder: 0,
-                          page: 0,
-                          statusOrder: 'huy');
-                }
-                Navigator.pushNamed(
-                    context, HuyBodyamnagerRestaurant.routeName);
-              },
-              imageAsset:
-                  'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
-            ),
+            // DefaultRow(
+            //   rowName: 'Đã Xác Nhận',
+            //   pushNamed: () async {
+            //     if (ordersXacNhan.length < 3) {
+            //       final orderTest = await ref
+            //           .read(AppStateProvider.orderTestNotifier.notifier)
+            //           .searchingorderByBuyingUserId(
+            //               BuyingUserId: userData!.userId!,
+            //               numberOfOrder: 0,
+            //               page: 0,
+            //               statusOrder: 'xac nhan');
+            //     }
+            //     Navigator.pushNamed(
+            //         context, DaXacNhanBodyamnagerRestaurant.routeName);
+            //   },
+            //   imageAsset: 'assets/icons/NicePng_recipe-icon-png_385397.png',
+            // ),
+            // Divider(),
+            // DefaultRow(
+            //   rowName: 'đơn hàng hoàn thành',
+            //   pushNamed: () async {
+            //     if (ordersHoanThanh.length < 3) {
+            //       final orderTest = await ref
+            //           .read(AppStateProvider.orderTestNotifier.notifier)
+            //           .searchingorderByBuyingUserId(
+            //               BuyingUserId: userData!.userId!,
+            //               numberOfOrder: 0,
+            //               page: 0,
+            //               statusOrder: 'hoan thanh');
+            //     }
+            //     // Navigator.pushNamed(
+            //     //     context, HoanThanhBodyamnagerRestaurant.routeName);
+            //   },
+            //   imageAsset:
+            //       'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
+            // ),
+            // Divider(),
+            // DefaultRow(
+            //   rowName: 'đơn hàng huỷ',
+            //   pushNamed: () async {
+            //     if (ordersHuy.length < 3) {
+            //       final orderTest = await ref
+            //           .read(AppStateProvider.orderTestNotifier.notifier)
+            //           .searchingorderByBuyingUserId(
+            //               BuyingUserId: userData!.userId!,
+            //               numberOfOrder: 0,
+            //               page: 0,
+            //               statusOrder: 'huy');
+            //     }
+            //   },
+            //   imageAsset:
+            //       'assets/icons/1000_F_316303014_qzT0VBwBMuIDOzTjEpvcuKvIoEo0Yz1E.jpg',
+            // ),
             Divider(),
             DefaultRow(
               subText: '14',
@@ -232,7 +235,11 @@ class DefaultRow extends StatelessWidget {
               height: getProportionateScreenHeight(30),
             ),
             Text(rowName),
-            if (subText != null) Text(subText!),
+            if (subText != null)
+              Text(
+                subText!,
+                style: TextStyle(color: Colors.red),
+              ),
             Spacer(),
             Icon(Icons.chevron_right)
             // IconButton(onPressed: () {}, icon: Icon(Icons.chevron_right))

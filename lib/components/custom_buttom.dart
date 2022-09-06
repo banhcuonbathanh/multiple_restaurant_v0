@@ -13,6 +13,7 @@ class CustomerButton extends StatelessWidget {
     required this.BorderRadiuscircular,
     required this.backgoundColor,
     this.child,
+    this.fontSize,
   }) : super(key: key);
   final Widget? child;
   final String text;
@@ -21,6 +22,7 @@ class CustomerButton extends StatelessWidget {
   final double buttonWidth;
   final double BorderRadiuscircular;
   final Color? backgoundColor;
+  final double? fontSize;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,7 +38,7 @@ class CustomerButton extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(14),
+                fontSize: getProportionateScreenWidth(fontSize ?? 14),
                 color: backgoundColor == null
                     ? Colors.white
                     : Colors.grey.shade600,

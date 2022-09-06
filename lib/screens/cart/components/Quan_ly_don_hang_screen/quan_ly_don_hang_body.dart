@@ -13,7 +13,6 @@ class QuanLyDonHang extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('build QuanLyDonHang');
     final restart = useState(true);
     final isShowChoXacNhan = useState<bool>(true);
     final isShowXacNhan = useState<bool>(false);

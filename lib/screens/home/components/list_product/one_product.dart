@@ -116,9 +116,17 @@ class GridLayoutOneProduct extends HookConsumerWidget {
                     height: getProportionateScreenHeight(110),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        ProductData.productImage!,
-                        fit: BoxFit.cover,
+                      child: Stack(
+                        children: [
+                          Image.network(
+                            ProductData.productImage!,
+                            fit: BoxFit.cover,
+                          ),
+                          // Positioned(
+                          //   right: 30,
+                          //   child: Text(ProductData.pro),
+                          // )
+                        ],
                       ),
                     ),
                   ),
