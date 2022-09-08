@@ -10,8 +10,10 @@ class RestaurantTitle extends HookConsumerWidget {
   final String restaurantName;
   final int index;
   final ScrollController controller;
+  final List<int?>? promotionList;
   const RestaurantTitle(
-      {required this.controller,
+      {required this.promotionList,
+      required this.controller,
       required this.index,
       Key? key,
       required this.restaurantName})
@@ -19,6 +21,14 @@ class RestaurantTitle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int promotion;
+    if (promotionList!.length > 0) {
+      promotionList!.sort();
+      promotion = promotionList!.last!;
+    } else {
+      promotion = 0;
+    }
+
     final locationIsHalf = useState(true);
     final slidingTransitionCon =
         useAnimationController(duration: Duration(microseconds: 500));
@@ -112,7 +122,7 @@ class RestaurantTitle extends HookConsumerWidget {
                     speed: const Duration(milliseconds: 200),
                   ),
                 ],
-                totalRepeatCount: 4,
+                totalRepeatCount: 10,
                 pause: const Duration(milliseconds: 1000),
                 displayFullTextOnTap: true,
                 stopPauseOnTap: true,
@@ -123,6 +133,28 @@ class RestaurantTitle extends HookConsumerWidget {
                 ],
                 isRepeatingAnimation: true,
               ),
+        Spacer(),
+        if (promotion != 0)
+          RichText(
+            text: TextSpan(
+              text: 'KM : ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: promotion.toString(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.red)),
+                TextSpan(
+                    text: '%',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.red)),
+              ],
+            ),
+          )
       ],
     );
   }

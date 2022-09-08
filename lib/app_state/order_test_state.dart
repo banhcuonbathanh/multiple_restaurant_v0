@@ -138,6 +138,43 @@ class OrderTestState extends StateNotifier<Map<String, OrderModel>> {
   }
 
   // -----------------------------------------------------------
+  Future<List<OrderModel>> searchingorderByRangeOfDate(
+      {required String fromDate,
+      required String toDate,
+      required String restaurantOnwnerId}) async {
+    Map<String, OrderModel> dataLocal = state;
+    try {
+      final serverOrders =
+          await read(API.orderTest).searchingorderByRangeOfDate(
+        fromDate: fromDate,
+        toDate: toDate,
+        restaurantOnwnerId: restaurantOnwnerId,
+      );
+
+      if (dataLocal.length < 1) {
+        Map<String, OrderModel> temporary = {};
+        serverOrders.forEach((element) {
+          temporary['${element.orderId}'] = element;
+        });
+        state = temporary;
+      } else {
+        for (final serverOrder in serverOrders) {
+          dataLocal.putIfAbsent(serverOrder.orderId, () => serverOrder);
+          state = dataLocal;
+        }
+      }
+
+      return serverOrders;
+      // print('state order state');
+      // print(state);
+    } on Exception catch (e, st) {
+      logger.severe('Repository Exception', e, st);
+      throw RepositoryException(
+          message: 'Repository Exception', exception: e, stackTrace: st);
+    }
+  }
+
+  // -----------------------------------------------------------
   Future<List<OrderModel>> getAllProduct() async {
     // print('getAllProduct');
     Map<String, OrderModel> dataLocal = state;

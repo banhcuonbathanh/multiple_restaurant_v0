@@ -95,6 +95,7 @@ class ListAllRestaurantAndProduct extends HookConsumerWidget {
                     index: index,
                     restaurantName: restaurantData.restaurantName!,
                     controller: controller,
+                    promotionList: restaurantData.promotionList,
                   ),
                   SizedBox(
                     height: getProportionateScreenHeight(10),

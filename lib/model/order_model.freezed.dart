@@ -36,7 +36,8 @@ class _$OrderModelTearOff {
       required String hour,
       required String minute,
       required String orderId,
-      required String restaurantOnwnerId}) {
+      required String restaurantOnwnerId,
+      required String createAt}) {
     return _OrderModel(
       restaurantName: restaurantName,
       BuyingUserName: BuyingUserName,
@@ -52,6 +53,7 @@ class _$OrderModelTearOff {
       minute: minute,
       orderId: orderId,
       restaurantOnwnerId: restaurantOnwnerId,
+      createAt: createAt,
     );
   }
 
@@ -80,6 +82,7 @@ mixin _$OrderModel {
   String get minute => throw _privateConstructorUsedError;
   String get orderId => throw _privateConstructorUsedError;
   String get restaurantOnwnerId => throw _privateConstructorUsedError;
+  String get createAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -106,7 +109,8 @@ abstract class $OrderModelCopyWith<$Res> {
       String hour,
       String minute,
       String orderId,
-      String restaurantOnwnerId});
+      String restaurantOnwnerId,
+      String createAt});
 }
 
 /// @nodoc
@@ -133,6 +137,7 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
     Object? minute = freezed,
     Object? orderId = freezed,
     Object? restaurantOnwnerId = freezed,
+    Object? createAt = freezed,
   }) {
     return _then(_value.copyWith(
       restaurantName: restaurantName == freezed
@@ -191,6 +196,10 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
           ? _value.restaurantOnwnerId
           : restaurantOnwnerId // ignore: cast_nullable_to_non_nullable
               as String,
+      createAt: createAt == freezed
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -215,7 +224,8 @@ abstract class _$OrderModelCopyWith<$Res> implements $OrderModelCopyWith<$Res> {
       String hour,
       String minute,
       String orderId,
-      String restaurantOnwnerId});
+      String restaurantOnwnerId,
+      String createAt});
 }
 
 /// @nodoc
@@ -244,6 +254,7 @@ class __$OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
     Object? minute = freezed,
     Object? orderId = freezed,
     Object? restaurantOnwnerId = freezed,
+    Object? createAt = freezed,
   }) {
     return _then(_OrderModel(
       restaurantName: restaurantName == freezed
@@ -302,6 +313,10 @@ class __$OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
           ? _value.restaurantOnwnerId
           : restaurantOnwnerId // ignore: cast_nullable_to_non_nullable
               as String,
+      createAt: createAt == freezed
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -323,7 +338,8 @@ class _$_OrderModel implements _OrderModel {
       required this.hour,
       required this.minute,
       required this.orderId,
-      required this.restaurantOnwnerId});
+      required this.restaurantOnwnerId,
+      required this.createAt});
 
   factory _$_OrderModel.fromJson(Map<String, dynamic> json) =>
       _$$_OrderModelFromJson(json);
@@ -356,10 +372,12 @@ class _$_OrderModel implements _OrderModel {
   final String orderId;
   @override
   final String restaurantOnwnerId;
+  @override
+  final String createAt;
 
   @override
   String toString() {
-    return 'OrderModel(restaurantName: $restaurantName, BuyingUserName: $BuyingUserName, BuyingUserId: $BuyingUserId, ProductId: $ProductId, restaurantId: $restaurantId, productdetailsIdList: $productdetailsIdList, toppingsList: $toppingsList, statusOrder: $statusOrder, address: $address, day: $day, hour: $hour, minute: $minute, orderId: $orderId, restaurantOnwnerId: $restaurantOnwnerId)';
+    return 'OrderModel(restaurantName: $restaurantName, BuyingUserName: $BuyingUserName, BuyingUserId: $BuyingUserId, ProductId: $ProductId, restaurantId: $restaurantId, productdetailsIdList: $productdetailsIdList, toppingsList: $toppingsList, statusOrder: $statusOrder, address: $address, day: $day, hour: $hour, minute: $minute, orderId: $orderId, restaurantOnwnerId: $restaurantOnwnerId, createAt: $createAt)';
   }
 
   @override
@@ -388,7 +406,8 @@ class _$_OrderModel implements _OrderModel {
             const DeepCollectionEquality().equals(other.minute, minute) &&
             const DeepCollectionEquality().equals(other.orderId, orderId) &&
             const DeepCollectionEquality()
-                .equals(other.restaurantOnwnerId, restaurantOnwnerId));
+                .equals(other.restaurantOnwnerId, restaurantOnwnerId) &&
+            const DeepCollectionEquality().equals(other.createAt, createAt));
   }
 
   @override
@@ -407,7 +426,8 @@ class _$_OrderModel implements _OrderModel {
       const DeepCollectionEquality().hash(hour),
       const DeepCollectionEquality().hash(minute),
       const DeepCollectionEquality().hash(orderId),
-      const DeepCollectionEquality().hash(restaurantOnwnerId));
+      const DeepCollectionEquality().hash(restaurantOnwnerId),
+      const DeepCollectionEquality().hash(createAt));
 
   @JsonKey(ignore: true)
   @override
@@ -435,7 +455,8 @@ abstract class _OrderModel implements OrderModel {
       required String hour,
       required String minute,
       required String orderId,
-      required String restaurantOnwnerId}) = _$_OrderModel;
+      required String restaurantOnwnerId,
+      required String createAt}) = _$_OrderModel;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
       _$_OrderModel.fromJson;
@@ -468,6 +489,8 @@ abstract class _OrderModel implements OrderModel {
   String get orderId;
   @override
   String get restaurantOnwnerId;
+  @override
+  String get createAt;
   @override
   @JsonKey(ignore: true)
   _$OrderModelCopyWith<_OrderModel> get copyWith =>

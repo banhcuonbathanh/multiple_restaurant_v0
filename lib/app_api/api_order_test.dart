@@ -74,6 +74,7 @@ class APIOrderTest {
         toppingsList: toppinglist,
         BuyingUserName: response.data['BuyingUserName'],
         restaurantName: response.data['restaurantName'],
+        createAt: response.data['createAt'],
       );
 
       return test1;
@@ -128,6 +129,7 @@ class APIOrderTest {
             toppingsList: toppinglist,
             BuyingUserName: response['BuyingUserName'],
             restaurantName: response['restaurantName'],
+            createAt: response['createAt'],
           );
 
           return test1;
@@ -141,6 +143,57 @@ class APIOrderTest {
   }
 
 // ---------------------------
+
+// ---------------------------
+
+  Future<List<OrderModel>> searchingorderByRangeOfDate(
+      {required String fromDate,
+      required String toDate,
+      required String restaurantOnwnerId}) async {
+    try {
+      final responses = await dio.post(
+          'http://127.0.0.1:3000/ordertest/searchingorderByRangeOfDate/',
+          data: {
+            'fromDate': fromDate,
+            'toDate': toDate,
+            'restaurantOnwnerId': restaurantOnwnerId,
+          });
+
+      if (responses.data.runtimeType == String) {
+        return [];
+      } else {
+        final test = List<OrderModel>.from((responses.data).map((response) {
+          final productdetaullist =
+              productDetailFromJson(response['productdetailsList']);
+
+          final toppinglist = toppingsFromJson(response['toppingsList']);
+
+          OrderModel test1 = OrderModel(
+              address: response['address'],
+              day: response['day'],
+              BuyingUserId: response['BuyingUserId'],
+              hour: response['hour'],
+              minute: response['minute'],
+              orderId: response['orderTestId'],
+              productdetailsIdList: productdetaullist,
+              ProductId: response['ProductId'],
+              restaurantId: response['restaurantId'],
+              restaurantOnwnerId: response['restaurantOnwnerId'],
+              statusOrder: response['statusOrder'],
+              toppingsList: toppinglist,
+              BuyingUserName: response['BuyingUserName'],
+              restaurantName: response['restaurantName'],
+              createAt: response['createAt']);
+
+          return test1;
+        }));
+
+        return test;
+      }
+    } on DioError catch (e) {
+      throw Exception(' failed to create post');
+    }
+  }
 // ----- testtesttesttesttesttesttesttesttesttesttesttesttesttesttest
 
   // Future<String> createFolderProductDetailImage_test({
@@ -367,21 +420,21 @@ class APIOrderTest {
       final toppinglist = toppingsFromJson(response.data['toppingsList']);
 
       OrderModel test1 = OrderModel(
-        address: response.data['address'],
-        day: response.data['day'],
-        BuyingUserId: response.data['BuyingUserId'],
-        hour: response.data['hour'],
-        minute: response.data['minute'],
-        orderId: response.data['orderTestId'],
-        productdetailsIdList: productdetaullist,
-        ProductId: response.data['ProductId'],
-        restaurantId: response.data['restaurantId'],
-        restaurantOnwnerId: response.data['restaurantOnwnerId'],
-        statusOrder: response.data['statusOrder'],
-        toppingsList: toppinglist,
-        BuyingUserName: response.data['BuyingUserName'],
-        restaurantName: response.data['restaurantName'],
-      );
+          address: response.data['address'],
+          day: response.data['day'],
+          BuyingUserId: response.data['BuyingUserId'],
+          hour: response.data['hour'],
+          minute: response.data['minute'],
+          orderId: response.data['orderTestId'],
+          productdetailsIdList: productdetaullist,
+          ProductId: response.data['ProductId'],
+          restaurantId: response.data['restaurantId'],
+          restaurantOnwnerId: response.data['restaurantOnwnerId'],
+          statusOrder: response.data['statusOrder'],
+          toppingsList: toppinglist,
+          BuyingUserName: response.data['BuyingUserName'],
+          restaurantName: response.data['restaurantName'],
+          createAt: response.data['createAt']);
       return test1;
     } on DioError catch (e) {
       logger.warning(e.message, e);

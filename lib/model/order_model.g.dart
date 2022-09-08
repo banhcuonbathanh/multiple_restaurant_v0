@@ -26,6 +26,7 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
       minute: json['minute'] as String,
       orderId: json['orderId'] as String,
       restaurantOnwnerId: json['restaurantOnwnerId'] as String,
+      createAt: json['createAt'] as String,
     );
 
 Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
@@ -44,4 +45,5 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'minute': instance.minute,
       'orderId': instance.orderId,
       'restaurantOnwnerId': instance.restaurantOnwnerId,
+      'createAt': instance.createAt,
     };

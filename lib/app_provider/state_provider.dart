@@ -22,6 +22,7 @@ import 'package:untitled1/model/restaurant_model.dart';
 import 'package:untitled1/model/topping_model.dart';
 import 'package:untitled1/model/user_model.dart';
 
+import '../app_state/order_analytic_state.dart';
 import '../app_state/product_state_Map.dart';
 
 abstract class AppStateProvider {
@@ -61,6 +62,8 @@ abstract class AppStateProvider {
 
   static StateNotifierProvider<OrderTestState, Map<String, OrderModel>>
       get orderTestNotifier => orderTestNotifier1;
+  static StateNotifierProvider<OrderAnalyticState, Map<String, OrderModel>>
+      get orderAnalytic => _orderAnalytic;
 }
 
 final _userNotifier = StateNotifierProvider<UserState, UserModel?>((ref) {
@@ -139,6 +142,12 @@ final _productMapNotifier =
 final orderTestNotifier1 =
     StateNotifierProvider<OrderTestState, Map<String, OrderModel>>((ref) {
   return OrderTestState(
+    ref.read,
+  );
+});
+final _orderAnalytic =
+    StateNotifierProvider<OrderAnalyticState, Map<String, OrderModel>>((ref) {
+  return OrderAnalyticState(
     ref.read,
   );
 });

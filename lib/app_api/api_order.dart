@@ -70,6 +70,7 @@ class APIOrder {
         restaurantOnwnerId: response.data['restaurantOnwnerId'],
         BuyingUserName: '',
         restaurantName: '',
+        createAt: '',
       );
 
       return test1;
@@ -115,7 +116,8 @@ class APIOrder {
           orderId: response.data['orderId'],
           restaurantOnwnerId: response.data['restaurantOnwnerId'],
           BuyingUserName: '',
-          restaurantName: '');
+          restaurantName: '',
+          createAt: response.data['createAt']);
 
       return test1;
     } on DioError catch (e) {
@@ -153,8 +155,9 @@ class APIOrder {
             minute: response.data['orderTiming'],
             orderId: response['orderId'],
             restaurantOnwnerId: response['restaurantOnwnerId'],
-            BuyingUserName: '',
-            restaurantName: '');
+            BuyingUserName: response['BuyingUserName'],
+            restaurantName: response['restaurantName'],
+            createAt: response['createAt']);
 
         return test1;
       }));
@@ -193,8 +196,9 @@ class APIOrder {
             minute: response.data['orderTiming'],
             orderId: response['orderId'],
             restaurantOnwnerId: response['restaurantOnwnerId'],
-            BuyingUserName: '',
-            restaurantName: '');
+            BuyingUserName: response['BuyingUserName'],
+            restaurantName: response['restaurantName'],
+            createAt: response['createAt']);
 
         return test1;
       }));

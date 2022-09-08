@@ -135,10 +135,10 @@ class Disposeofhome extends StateNotifier<bool> {
   }
 }
 
-class orderTimingDay extends StateNotifier<int?> {
+class orderTimingDay extends StateNotifier<DateTime?> {
   orderTimingDay() : super(null);
 
-  void orderday({int? day}) {
+  void orderday({DateTime? day}) {
     state = day;
   }
 }

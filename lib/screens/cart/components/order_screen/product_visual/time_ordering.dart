@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
@@ -85,7 +86,7 @@ class thoigiannhanHang extends HookConsumerWidget {
     final CurrentTime = DateTime.parse(DateTime.now().toString());
     final currentHour = CurrentTime.hour;
     final currentMinut = CurrentTime.minute;
-    final currentDay = CurrentTime.day;
+    final DateTime currentDay = DateTime.now();
     final isShowSelectHour = useState<bool>(false);
     final isShowSelectMinut = useState<bool>(false);
     final isTodaySelective = useState<bool>(false);
@@ -93,7 +94,7 @@ class thoigiannhanHang extends HookConsumerWidget {
     final selectedMinuted = useState(0);
     final selectedHour = useState(0);
 
-    final recevingDay = useState<int>(0);
+    final recevingDay = useState<DateTime?>(null);
     final recevingHour = useState<int>(0);
     final recevingMinute = useState<int>(0);
     return Column(
@@ -161,7 +162,9 @@ class thoigiannhanHang extends HookConsumerWidget {
 
                   isTodaySelective.value = false;
                   // ------------------------
-                  recevingDay.value = currentDay + 1;
+                  // recevingDay.value = currentDay + 1;
+                  recevingDay.value = DateTime(DateTime.now().year,
+                      DateTime.now().month, DateTime.now().day + 1);
                   ref
                       .read(Utility.orderDay.notifier)
                       .orderday(day: recevingDay.value);
@@ -230,7 +233,7 @@ class thoigiannhanHang extends HookConsumerWidget {
               selectedHour.value = val;
               isShowSelectHour.value = !isShowSelectHour.value;
             },
-            recevieDay: recevingDay.value,
+            recevieDay: recevingDay.value!,
             currentDay: currentDay,
             restaurantData: restaurantData,
             currentHour: currentHour,
@@ -244,7 +247,7 @@ class thoigiannhanHang extends HookConsumerWidget {
               selectedMinuted.value = selecnumber;
               isShowSelectMinut.value = !isShowSelectMinut.value;
             },
-            recevieDay: recevingDay.value,
+            recevieDay: recevingDay.value!,
             selectedHour: selectedHour.value,
             currentDay: currentDay,
             restaurantData: restaurantData,
@@ -267,9 +270,9 @@ class ChoseMinute extends HookConsumerWidget {
   }) : super(key: key);
 
   final minuteSelective callback;
-  final int recevieDay;
+  final DateTime recevieDay;
   final int selectedHour;
-  final int currentDay;
+  final DateTime currentDay;
   final RestaurantModel restaurantData;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -323,8 +326,8 @@ class ChoseHour extends HookConsumerWidget {
   }) : super(key: key);
 
   final minuteSelective callback;
-  final int recevieDay;
-  final int currentDay;
+  final DateTime recevieDay;
+  final DateTime currentDay;
   final int currentHour;
   final RestaurantModel restaurantData;
   @override

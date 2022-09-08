@@ -23,6 +23,7 @@ abstract class OrderModel with _$OrderModel {
     required String minute,
     required String orderId,
     required String restaurantOnwnerId,
+    required String createAt,
 
     // required List<ToppingModel>? toppingList,
   }) = _OrderModel;

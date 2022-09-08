@@ -18,7 +18,8 @@ abstract class Utility {
       get showAnimationForBuying1 => showAnimationForBuying;
   static StateNotifierProvider<Disposeofhome, bool> get disposeofhomeGetter =>
       disposeofhome;
-  static StateNotifierProvider<orderTimingDay, int?> get orderDay => _orderDay;
+  static StateNotifierProvider<orderTimingDay, DateTime?> get orderDay =>
+      _orderDay;
   static StateNotifierProvider<orderTimingHour, int?> get orderHour =>
       _orderHour;
   static StateNotifierProvider<orderTimingMinute, int?> get orderMinute =>
@@ -62,7 +63,7 @@ final showAnimationForBuying =
 final disposeofhome = StateNotifierProvider<Disposeofhome, bool>((ref) {
   return Disposeofhome();
 });
-final _orderDay = StateNotifierProvider<orderTimingDay, int?>((ref) {
+final _orderDay = StateNotifierProvider<orderTimingDay, DateTime?>((ref) {
   return orderTimingDay();
 });
 final _orderHour = StateNotifierProvider<orderTimingHour, int?>((ref) {

@@ -9,6 +9,8 @@ import 'package:untitled1/model/product_model.dart';
 import 'package:untitled1/screens/home/components/product_detail_modal_sheet_home/product_detail_list_home.dart';
 import 'package:untitled1/size_config.dart';
 
+import '../../../../components/promotionItem.dart';
+
 class GridLayoutOneProduct extends HookConsumerWidget {
   const GridLayoutOneProduct({
     required this.index,
@@ -111,25 +113,32 @@ class GridLayoutOneProduct extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: getProportionateScreenWidth(160),
-                    height: getProportionateScreenHeight(110),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Stack(
-                        children: [
-                          Image.network(
-                            ProductData.productImage!,
-                            fit: BoxFit.cover,
-                          ),
-                          // Positioned(
-                          //   right: 30,
-                          //   child: Text(ProductData.pro),
-                          // )
-                        ],
-                      ),
-                    ),
+                  PromotionItem(
+                    picture: ProductData.productImage!,
+                    pictureHeight: 110,
+                    pictureWith: 160,
+                    promotionList: ProductData.promotionList!,
+                    padding: 0,
                   ),
+                  // SizedBox(
+                  //   width: getProportionateScreenWidth(160),
+                  //   height: getProportionateScreenHeight(110),
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     child: Stack(
+                  //       children: [
+                  //         Image.network(
+                  //           ProductData.productImage!,
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //         // Positioned(
+                  //         //   right: 30,
+                  //         //   child: Text(ProductData.pro),
+                  //         // )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Text(ProductData.productName!),
                   Row(
                     children: [
