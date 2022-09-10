@@ -3,13 +3,15 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:untitled1/size_config.dart';
 
-import 'bieu_do/bieu_do2.dart';
+import 'bieu_do/bieu_do_2_tuan.dart';
 
+import 'bieu_do/bieu_do_ngay.dart';
 import 'bieu_do/data.dart';
 
 import 'pie_chart.dart';
@@ -31,9 +33,7 @@ class AnalyticScreen extends HookConsumerWidget {
         ref.read(AppStateProvider.orderAnalytic.notifier).inDefferentHour;
 
     final orderLength = orderAnalytic.length;
-    // -----------------------
-    List<double> listX1 = List<double>.generate(orderAnalytic.length,
-        (index) => (indefferentHour / orderAnalytic.length) * index);
+
     // ----------------------------
     // theo khoang gio
     List<double> listXDefferentFromHour = List<double>.generate(
@@ -42,39 +42,90 @@ class AnalyticScreen extends HookConsumerWidget {
             .difference(fromDate)
             .inHours
             .toDouble());
-
-    List<double> listXDate = [];
+// --------------
+// day of order
+    List<double> listXDayOfOrderAnalitic = [];
     for (var i in orderAnalytic) {
-      listXDate.add(DateTime.parse(i.createAt).day.toDouble());
+      listXDayOfOrderAnalitic.add(DateTime.parse(i.createAt).day.toDouble());
     }
+    // -----------------
+    List<DateTime> listXDateInOrder = [];
+    for (var i in orderAnalytic) {
+      final temp = DateFormat('yyyy-MM-dd').format(DateTime.parse(i.createAt));
 
+      listXDateInOrder.add(DateTime.parse(i.createAt));
+    }
+    //  create map from from date to date
+
+    List<DateTime> listDateFromDateToDate = ref
+        .read(AppStateProvider.orderAnalytic.notifier)
+        .makeListDateFromDateToDate();
+    // Map<double, DateTime> DateandDayFromToDate = {};
+    // listDateFromDateToDate.forEach((Element) {
+    //   DateandDayFromToDate.putIfAbsent((Element).day.toDouble(), () => Element);
+    // });
+    Map<double, DateTime> mapDayandDateFromToDate = ref
+        .read(AppStateProvider.orderAnalytic.notifier)
+        .mapDayandDateFromToDate(
+            listDateFromDateToDate: listDateFromDateToDate);
+    // -------------------------------
     // ----------
 // couting number of the same day
-    Map<double, double> coutingSameDay = {};
+    // Map<double, double> coutingSameDay = {};
+    // List<double> keysofDateandDayFromToDate =
+    //     mapDayandDateFromToDate.keys.toList();
+    // keysofDateandDayFromToDate.forEach((element) {
+    //   coutingSameDay[element] = 0.0;
+    // });
+    final listYCoutingSameDay = ref
+        .read(AppStateProvider.orderAnalytic.notifier)
+        .listYCoutingSameDay(
+            mapDayandDateFromToDate: mapDayandDateFromToDate,
+            mapDayandDateFromToDate1: mapDayandDateFromToDate);
 
-    listXDate.forEach((element) {
-      if (!coutingSameDay.containsKey(element)) {
-        coutingSameDay[element.toDouble()] = 1.toDouble();
+    listXDayOfOrderAnalitic.forEach((element) {
+      if (!listYCoutingSameDay.containsKey(element)) {
+        listYCoutingSameDay[element.toDouble()] = 1.toDouble();
       } else {
-        coutingSameDay[element.toDouble()] = coutingSameDay[element]! + 1;
+        listYCoutingSameDay[element.toDouble()] =
+            listYCoutingSameDay[element]! + 1;
       }
     });
-    List<double> listMapX = coutingSameDay.keys.toList();
-    List<double> listMapY = coutingSameDay.values.toList();
+    // print('coutingSameDay');
+    // print(listYCoutingSameDay);
+    List<double> listMapX = listYCoutingSameDay.keys.toList();
+    // List<double> listXTest0ToLeng = [];
+    // for (int index = 0; index < listDateFromDateToDate.length; index++) {
+    //   listXTest0ToLeng.add(index.toDouble());
+    // }
+    List<double> listX = ref
+        .read(AppStateProvider.orderAnalytic.notifier)
+        .listX(listDateFromDateToDate: listDateFromDateToDate);
+    List<double> listMapY = listYCoutingSameDay.values.toList();
     // ----
 // Map day, day in detail
-    Map<double, DateTime> DateandDay = {};
-    orderAnalytic.forEach((Element) {
-      DateandDay.putIfAbsent(DateTime.parse(Element.createAt).day.toDouble(),
-          () => DateTime.parse(Element.createAt));
-    });
-    print('listMapX');
-    print(listMapX);
-    print('listMapY');
-    print(listMapY);
+    // Map<double, DateTime> DateandDayOfOrder = {};
 
-    print('listXDate');
-    print(listXDate);
+    // orderAnalytic.forEach((Element) {
+    //   DateandDayOfOrder.putIfAbsent(
+    //       DateTime.parse(Element.createAt).day.toDouble(),
+    //       () => DateTime.parse(Element.createAt));
+    // });
+
+    // ------------------------------
+
+    // print('listDateFromDateToDate');
+    // print(listDateFromDateToDate);
+    // // ------------------------------------
+    // print('listMapX');
+    // print(listMapX);
+    // print('listMapY');
+    // print(listMapY);
+
+    // print('listXDayDate');
+    // print(listXDayOfOrderAnalitic);
+    // print('DateandDayFromToDate');
+    // print(mapDayandDateFromToDate);
     // print(fromDate);
     // print('test');
     // print(test);
@@ -95,14 +146,23 @@ class AnalyticScreen extends HookConsumerWidget {
           buttonIndex: buttonIndex,
           orderAnalytic: orderAnalytic,
         ),
-        if (orderAnalytic.length > 0) Text(orderAnalytic.last.toString()),
         Divider(),
-        BieuDo2(
+        if (orderAnalytic.length > 0 &&
+            (indefferentHour / 24) < 13 &&
+            (indefferentHour / 24) > 1)
+          BieuDo2Tuan(
+            fromDate: fromDate,
+            toDate: toDate,
+            listMapX: listX,
+            listMapY: listMapY,
+            DateandDay: mapDayandDateFromToDate,
+          ),
+        BieuDoNgay(
           fromDate: fromDate,
           toDate: toDate,
-          listMapX: listMapX,
+          listMapX: listX,
           listMapY: listMapY,
-          DateandDay: DateandDay,
+          DateandDay: mapDayandDateFromToDate,
         ),
         Pie_chart(),
       ],

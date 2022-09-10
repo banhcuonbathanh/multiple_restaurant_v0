@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import '../../../../../size_config.dart';
 import 'data.dart';
 
-class BieuDo2 extends StatelessWidget {
-  const BieuDo2(
+class BieuDo2Tuan extends StatelessWidget {
+  const BieuDo2Tuan(
       {Key? key,
       required this.fromDate,
       required this.toDate,
@@ -32,7 +32,7 @@ class BieuDo2 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('data'),
+        Text('bieu do 2 tuan :'),
         SizedBox(
           height: getProportionateScreenWidth(15),
         ),
@@ -54,17 +54,14 @@ class BieuDo2 extends StatelessWidget {
                       showTitles: true,
                       reservedSize: 22,
                       getTitlesWidget: (value, meta) {
-                        DateTime value1 = DateTime.now();
-                        for (var i in listMapX) {
-                          if (value.toInt() == i) {
-                            value1 = DateandDay[i]!;
-                          }
-                        }
-                        if (value.toInt() == listMapX[0]) {
-                          value1 = fromDate;
-                        }
+                        final ListY = DateandDay.values.toList();
+                        // final keys = DateandDay.keys.toList();
+                        // String value1 = '';
+                        // value1 = DateFormat('dd')
+                        //     .format(DateandDay[value.toDouble()]!);
 
-                        return Text(DateFormat('MM-dd').format(value1));
+                        return Text(
+                            DateFormat('dd').format(ListY[value.toInt()]));
                       }),
                 ),
               ),

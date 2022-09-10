@@ -71,4 +71,44 @@ class OrderAnalyticState extends StateNotifier<Map<String, OrderModel>> {
     // print('state order state');
     // print(state);
   }
+
+  //  create map from from date to date
+  List<DateTime> makeListDateFromDateToDate() {
+    List<DateTime> listDateFromDateToDate = [];
+    for (int index = 0; index < toDate.difference(fromDate).inDays; index++) {
+      listDateFromDateToDate
+          .add(DateTime(fromDate.year, fromDate.month, fromDate.day + index));
+    }
+    return listDateFromDateToDate;
+  }
+
+  Map<double, DateTime> mapDayandDateFromToDate(
+      {required List<DateTime> listDateFromDateToDate}) {
+    Map<double, DateTime> DateandDayFromToDate = {};
+    listDateFromDateToDate.forEach((Element) {
+      DateandDayFromToDate.putIfAbsent((Element).day.toDouble(), () => Element);
+    });
+    return DateandDayFromToDate;
+  }
+
+  Map<double, double> listYCoutingSameDay(
+      {required Map<double, DateTime> mapDayandDateFromToDate,
+      required Map<double, DateTime> mapDayandDateFromToDate1}) {
+    Map<double, double> coutingSameDay = {};
+    List<double> keysofDateandDayFromToDate =
+        mapDayandDateFromToDate.keys.toList();
+    keysofDateandDayFromToDate.forEach((element) {
+      coutingSameDay[element] = 0.0;
+    });
+    return coutingSameDay;
+  }
+
+  List<double> listX({required List<DateTime> listDateFromDateToDate}) {
+    List<double> listXTest0ToLeng = [];
+    for (int index = 0; index < listDateFromDateToDate.length; index++) {
+      listXTest0ToLeng.add(index.toDouble());
+    }
+    return listXTest0ToLeng;
+  }
+  //--------------------------------------
 }
