@@ -19,6 +19,7 @@ class OrderAnalyticState extends StateNotifier<Map<String, OrderModel>> {
   DateTime toDate = DateTime.now();
   String bieuDoType = '';
   int inDefferentHour = 0;
+
   void fromDateFunc({required DateTime fromDateData}) {
     fromDate = fromDateData;
   }

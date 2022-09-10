@@ -16,6 +16,7 @@ class PhanTichBanHang extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restart = useState<bool>(true);
+    print(' build PhanTichBanHang');
     return Scaffold(
       appBar: AppBar(
         title: Text(

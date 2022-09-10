@@ -3,11 +3,15 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:untitled1/size_config.dart';
 
-import 'bieu_do_line.dart';
+import 'bieu_do/bieu_do2.dart';
+
+import 'bieu_do/data.dart';
+
 import 'pie_chart.dart';
 
 class AnalyticScreen extends HookConsumerWidget {
@@ -15,6 +19,7 @@ class AnalyticScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final buttonIndex = useState(0);
     final orderAnalytic =
         ref.watch(AppStateProvider.orderAnalytic).values.toList();
     DateTime fromDate =
@@ -24,17 +29,55 @@ class AnalyticScreen extends HookConsumerWidget {
         ref.read(AppStateProvider.orderAnalytic.notifier).bieuDoType;
     int indefferentHour =
         ref.read(AppStateProvider.orderAnalytic.notifier).inDefferentHour;
-    List<String> caseValue = List<String>.generate(
-        6, (index) => (indefferentHour / (6) * (index + 1)).toString());
 
-    final test =
-        DateTime.parse(orderAnalytic.last.day).difference(fromDate).inHours;
-    List<String> listX = List<String>.generate(
-        orderAnalytic.length, (index) => orderAnalytic[index].day);
-    print(fromDate);
-    print('test');
-    print(test);
-    final buttonIndex = useState(0);
+    final orderLength = orderAnalytic.length;
+    // -----------------------
+    List<double> listX1 = List<double>.generate(orderAnalytic.length,
+        (index) => (indefferentHour / orderAnalytic.length) * index);
+    // ----------------------------
+    // theo khoang gio
+    List<double> listXDefferentFromHour = List<double>.generate(
+        orderAnalytic.length,
+        (index) => DateTime.parse(orderAnalytic[index].createAt)
+            .difference(fromDate)
+            .inHours
+            .toDouble());
+
+    List<double> listXDate = [];
+    for (var i in orderAnalytic) {
+      listXDate.add(DateTime.parse(i.createAt).day.toDouble());
+    }
+
+    // ----------
+// couting number of the same day
+    Map<double, double> coutingSameDay = {};
+
+    listXDate.forEach((element) {
+      if (!coutingSameDay.containsKey(element)) {
+        coutingSameDay[element.toDouble()] = 1.toDouble();
+      } else {
+        coutingSameDay[element.toDouble()] = coutingSameDay[element]! + 1;
+      }
+    });
+    List<double> listMapX = coutingSameDay.keys.toList();
+    List<double> listMapY = coutingSameDay.values.toList();
+    // ----
+// Map day, day in detail
+    Map<double, DateTime> DateandDay = {};
+    orderAnalytic.forEach((Element) {
+      DateandDay.putIfAbsent(DateTime.parse(Element.createAt).day.toDouble(),
+          () => DateTime.parse(Element.createAt));
+    });
+    print('listMapX');
+    print(listMapX);
+    print('listMapY');
+    print(listMapY);
+
+    print('listXDate');
+    print(listXDate);
+    // print(fromDate);
+    // print('test');
+    // print(test);
 
     return ListView(
       padding:
@@ -52,21 +95,14 @@ class AnalyticScreen extends HookConsumerWidget {
           buttonIndex: buttonIndex,
           orderAnalytic: orderAnalytic,
         ),
-        Text(fromDate.toString()),
-        Text(toDate.toString()),
-        Text(indefferentHour.toString()),
-        Text(caseValue.toString()),
-        if (orderAnalytic.length > 0) Text(orderAnalytic.last.day),
+        if (orderAnalytic.length > 0) Text(orderAnalytic.last.toString()),
         Divider(),
-        BieuDoLine(
-          maxX: 12,
-          maxY: 10,
-          minX: 0,
-          minY: 0,
-          title: 'bieu do so luond don hang theo: ${bieuDoType}',
-          listy: [2, 10, 4, 8, 6, 7, 8],
-          listx: [0, 1.5, 4, 6, 8, 10, 12],
-          caseValue: caseValue,
+        BieuDo2(
+          fromDate: fromDate,
+          toDate: toDate,
+          listMapX: listMapX,
+          listMapY: listMapY,
+          DateandDay: DateandDay,
         ),
         Pie_chart(),
       ],

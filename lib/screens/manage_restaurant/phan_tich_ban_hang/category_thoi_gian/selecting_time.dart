@@ -133,6 +133,7 @@ class SelectingTime extends HookConsumerWidget {
                     ref
                         .read(AppStateProvider.orderAnalytic.notifier)
                         .bieuDoTypeFunc(differentDay: indefferentHour);
+
                     restartFunc();
                   },
                   buttonHeight: 50,
