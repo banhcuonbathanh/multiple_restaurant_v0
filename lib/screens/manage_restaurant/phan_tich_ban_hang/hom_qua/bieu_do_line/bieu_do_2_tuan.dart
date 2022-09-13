@@ -7,8 +7,8 @@ import 'package:untitled1/model/Spot_mode.dart';
 
 import '../../../../../size_config.dart';
 
-class BieuDo2Tuan extends StatelessWidget {
-  const BieuDo2Tuan(
+class BieuDoLine2Tuan extends StatelessWidget {
+  const BieuDoLine2Tuan(
       {Key? key,
       required this.fromDate,
       required this.toDate,

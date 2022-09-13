@@ -10,8 +10,8 @@ import 'package:untitled1/model/order_model.dart';
 
 import '../../../../../size_config.dart';
 
-class BieuDoNgay extends StatelessWidget {
-  const BieuDoNgay(
+class BieuDoLineNgay extends StatelessWidget {
+  const BieuDoLineNgay(
       {Key? key,
       required this.fromDate,
       required this.toDate,
@@ -31,8 +31,6 @@ class BieuDoNgay extends StatelessWidget {
   final Map<double, DateTime> DateandDay;
   @override
   Widget build(BuildContext context) {
-    final test = DateTime.parse(orderAnalytic[0].createAt);
-
     final List<Color> gradientColors = [
       const Color(0xff23b6e6),
       const Color(0xff02d39a),
@@ -87,11 +85,6 @@ class BieuDoNgay extends StatelessWidget {
         listY[7] = listY[7] + 1.toDouble();
       }
     }
-
-    print('listX');
-    print(listX);
-    print('listY');
-    print(listY);
     // --------------------------------
 
     return Column(

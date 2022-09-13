@@ -152,7 +152,7 @@ class AnalyticScreen extends HookConsumerWidget {
         if (orderAnalytic.length > 0 &&
             (indefferentHour / 24) < 13 &&
             (indefferentHour / 24) > 1)
-          BieuDo2Tuan(
+          BieuDoLine2Tuan(
             fromDate: fromDate,
             toDate: toDate,
             listMapX: listX,
@@ -160,12 +160,11 @@ class AnalyticScreen extends HookConsumerWidget {
             DateandDay: mapDayandDateFromToDate,
           ),
         if (orderAnalytic.length > 0 && (indefferentHour / 24) == 1)
-          BieuDoNgay(
+          BieuDoLineNgay(
             fromDate: fromDate,
             toDate: toDate,
-            // listMapX: listX,
-            // listMapY: listMapY,
-            DateandDay: mapDayandDateFromToDate, orderAnalytic: orderAnalytic,
+            DateandDay: mapDayandDateFromToDate,
+            orderAnalytic: orderAnalytic,
             bieuDoType: bieuDoType,
           ),
         // DataTableCustomer(
@@ -174,7 +173,13 @@ class AnalyticScreen extends HookConsumerWidget {
         DataTableCustomer2(
           orderAnalitic: orderAnalytic,
         ),
-        ScatterChartSample2(),
+        ScatterChartNgay(
+          fromDate: fromDate,
+          toDate: toDate,
+          DateandDay: mapDayandDateFromToDate,
+          orderAnalytic: orderAnalytic,
+          bieuDoType: bieuDoType,
+        ),
         Pie_chart(),
       ],
     );
