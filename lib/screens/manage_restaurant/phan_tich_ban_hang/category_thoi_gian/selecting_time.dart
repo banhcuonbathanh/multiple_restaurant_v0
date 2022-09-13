@@ -94,11 +94,21 @@ class SelectingTime extends HookConsumerWidget {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
           child: Row(
             children: [
-              Expanded(child: SelectingDate(startingDate: fromDate)),
+              Expanded(
+                  child: SelectingDate(
+                startingDate: fromDate,
+                resetToDate: () {
+                  toDate.value = null;
+                },
+              )),
               SizedBox(
                 width: getProportionateScreenWidth(5),
               ),
-              Expanded(child: SelectingDate(startingDate: toDate)),
+              Expanded(
+                  child: SelectingDate(
+                startingDate: toDate,
+                resetToDate: () {},
+              )),
               SizedBox(
                 width: getProportionateScreenWidth(5),
               ),
@@ -108,6 +118,11 @@ class SelectingTime extends HookConsumerWidget {
                     if (fromDate.value!.compareTo(toDate.value!) > 0) {
                       CustomScaffoldMessger(
                           contend: 'ngay bat dau lon hon ngay ket thuc',
+                          context: context);
+                    }
+                    if (fromDate.value!.compareTo(toDate.value!) == 0) {
+                      CustomScaffoldMessger(
+                          contend: 'ngay ket thuc can lon hon ngay bat dau',
                           context: context);
                     }
                     final order = await ref
@@ -155,10 +170,11 @@ class SelectingDate extends StatelessWidget {
   const SelectingDate({
     Key? key,
     required this.startingDate,
+    required this.resetToDate,
   }) : super(key: key);
 
   final ValueNotifier<DateTime?> startingDate;
-
+  final Function resetToDate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -187,6 +203,7 @@ class SelectingDate extends StatelessWidget {
                             DateTime.now().month, DateTime.now().day + 1));
                     if (value != null) {
                       startingDate.value = value;
+                      resetToDate();
                       // DateFormat('yyyy-MM-dd').format(value);
                     }
 

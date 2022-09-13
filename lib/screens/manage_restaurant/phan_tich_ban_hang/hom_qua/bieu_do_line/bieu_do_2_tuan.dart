@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled1/model/Spot_mode.dart';
 
 import '../../../../../size_config.dart';
-import 'data.dart';
 
 class BieuDo2Tuan extends StatelessWidget {
   const BieuDo2Tuan(

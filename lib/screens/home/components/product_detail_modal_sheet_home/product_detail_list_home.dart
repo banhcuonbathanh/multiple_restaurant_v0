@@ -312,7 +312,13 @@ class ProductDetailList_Home extends HookConsumerWidget {
                                           restaurantId: restaurantId,
                                           productdetailsList: sanPhamMua,
                                           toppingsList: toppingList,
-                                          day: orderDay.toString(),
+                                          day: DateTime(
+                                                  orderDay.year,
+                                                  orderDay.month,
+                                                  orderDay.day,
+                                                  orderDay.hour + orderHour,
+                                                  orderDay.minute + orderMinute)
+                                              .toIso8601String(),
                                           hour: orderHour.toString(),
                                           minute: orderMinute.toString(),
                                           restaurantOnwnerId:

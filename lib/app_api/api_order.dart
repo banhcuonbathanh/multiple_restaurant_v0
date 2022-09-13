@@ -30,7 +30,6 @@ class APIOrder {
     required String minute,
     required String restaurantOnwnerId,
   }) async {
-    print('createOrder');
     // var formData = FormData.fromMap({
     //   'userId': userId,
     // });
@@ -49,7 +48,7 @@ class APIOrder {
         'minute': 'minute',
         'restaurantOnwnerId': restaurantOnwnerId,
       });
-      print('>>>>>>>>>>>>>>>>>>>>>');
+
       final productdetaullist =
           productDetailFromJson(response.data['productdetailsList']);
 
@@ -70,7 +69,7 @@ class APIOrder {
         restaurantOnwnerId: response.data['restaurantOnwnerId'],
         BuyingUserName: '',
         restaurantName: '',
-        createAt: '',
+        createAt: response.data['createAt'],
       );
 
       return test1;
@@ -100,8 +99,7 @@ class APIOrder {
           productDetailFromJson(response.data['productdetailsList']);
 
       final toppinglist = toppingsFromJson(response.data['toppingsList']);
-      print('getOneOrderById');
-      print(response.data['orderstatus']);
+
       OrderModel test1 = OrderModel(
           BuyingUserId: response.data['BuyingUserId'],
           productdetailsIdList: productdetaullist,

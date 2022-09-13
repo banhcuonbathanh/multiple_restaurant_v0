@@ -9,12 +9,12 @@ import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/model/order_model.dart';
 import 'package:untitled1/size_config.dart';
 
-import 'bieu_do/bieu_do_2_tuan.dart';
-
-import 'bieu_do/bieu_do_ngay.dart';
-import 'bieu_do/data.dart';
-
+import 'bieu_do_line/bieu_do_2_tuan.dart';
+import 'bieu_do_line/bieu_do_ngay.dart';
+import 'data_table/data_table.dart';
+import 'data_table/data_table_2.dart';
 import 'pie_chart.dart';
+import 'scatter chart/scatter_chart.dart';
 
 class AnalyticScreen extends HookConsumerWidget {
   const AnalyticScreen({Key? key}) : super(key: key);
@@ -42,6 +42,8 @@ class AnalyticScreen extends HookConsumerWidget {
             .difference(fromDate)
             .inHours
             .toDouble());
+    print('indefferentHour');
+    print(indefferentHour);
 // --------------
 // day of order
     List<double> listXDayOfOrderAnalitic = [];
@@ -77,23 +79,23 @@ class AnalyticScreen extends HookConsumerWidget {
     // keysofDateandDayFromToDate.forEach((element) {
     //   coutingSameDay[element] = 0.0;
     // });
-    final listYCoutingSameDay = ref
+    final listYCoutingSameDay2Week = ref
         .read(AppStateProvider.orderAnalytic.notifier)
         .listYCoutingSameDay(
             mapDayandDateFromToDate: mapDayandDateFromToDate,
             mapDayandDateFromToDate1: mapDayandDateFromToDate);
 
     listXDayOfOrderAnalitic.forEach((element) {
-      if (!listYCoutingSameDay.containsKey(element)) {
-        listYCoutingSameDay[element.toDouble()] = 1.toDouble();
+      if (!listYCoutingSameDay2Week.containsKey(element)) {
+        listYCoutingSameDay2Week[element.toDouble()] = 1.toDouble();
       } else {
-        listYCoutingSameDay[element.toDouble()] =
-            listYCoutingSameDay[element]! + 1;
+        listYCoutingSameDay2Week[element.toDouble()] =
+            listYCoutingSameDay2Week[element]! + 1;
       }
     });
     // print('coutingSameDay');
     // print(listYCoutingSameDay);
-    List<double> listMapX = listYCoutingSameDay.keys.toList();
+    List<double> listMapX = listYCoutingSameDay2Week.keys.toList();
     // List<double> listXTest0ToLeng = [];
     // for (int index = 0; index < listDateFromDateToDate.length; index++) {
     //   listXTest0ToLeng.add(index.toDouble());
@@ -101,7 +103,7 @@ class AnalyticScreen extends HookConsumerWidget {
     List<double> listX = ref
         .read(AppStateProvider.orderAnalytic.notifier)
         .listX(listDateFromDateToDate: listDateFromDateToDate);
-    List<double> listMapY = listYCoutingSameDay.values.toList();
+    List<double> listMapY = listYCoutingSameDay2Week.values.toList();
     // ----
 // Map day, day in detail
     // Map<double, DateTime> DateandDayOfOrder = {};
@@ -157,13 +159,22 @@ class AnalyticScreen extends HookConsumerWidget {
             listMapY: listMapY,
             DateandDay: mapDayandDateFromToDate,
           ),
-        BieuDoNgay(
-          fromDate: fromDate,
-          toDate: toDate,
-          listMapX: listX,
-          listMapY: listMapY,
-          DateandDay: mapDayandDateFromToDate,
+        if (orderAnalytic.length > 0 && (indefferentHour / 24) == 1)
+          BieuDoNgay(
+            fromDate: fromDate,
+            toDate: toDate,
+            // listMapX: listX,
+            // listMapY: listMapY,
+            DateandDay: mapDayandDateFromToDate, orderAnalytic: orderAnalytic,
+            bieuDoType: bieuDoType,
+          ),
+        // DataTableCustomer(
+        //   orderAnalitic: orderAnalytic,
+        // ),
+        DataTableCustomer2(
+          orderAnalitic: orderAnalytic,
         ),
+        ScatterChartSample2(),
         Pie_chart(),
       ],
     );
