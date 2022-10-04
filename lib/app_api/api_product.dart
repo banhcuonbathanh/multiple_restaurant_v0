@@ -15,13 +15,6 @@ class APIProduct {
     required String restaurantName,
     required String productName,
   }) async {
-    // var formdata = FormData.fromMap(
-    //   {
-    //     // 'category': category,
-    //     'restaurantName': restaurantName,
-    //     'productName': productName,
-    //   },
-    // );
     try {
       final response = await dio
           .post('http://127.0.0.1:3000/folder/createProductImage/', data: {

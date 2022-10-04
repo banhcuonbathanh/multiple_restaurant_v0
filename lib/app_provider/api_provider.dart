@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:untitled1/app_api/api_categories.dart';
+import 'package:untitled1/app_api/api_click.dart';
 import 'package:untitled1/app_api/api_order.dart';
 import 'package:untitled1/app_api/api_product.dart';
 import 'package:untitled1/app_api/api_productdetail.dart';
@@ -20,6 +21,7 @@ abstract class API {
   static Provider<APISocket> get socket => _socket;
   static Provider<APICategory> get category => _category;
   static Provider<APIOrderTest> get orderTest => _orderTest;
+  static Provider<APIClick> get click => _click;
 }
 
 final _user = Provider<APIUser>((ref) {
@@ -52,4 +54,7 @@ final _category = Provider<APICategory>((ref) {
 });
 final _orderTest = Provider<APIOrderTest>((ref) {
   return APIOrderTest(ref.read);
+});
+final _click = Provider<APIClick>((ref) {
+  return APIClick(ref.read);
 });

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:untitled1/app_provider/api_provider.dart';
 
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/model/product_model.dart';
@@ -25,7 +27,8 @@ class GridLayoutOneProduct extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationIsHalf = useState(true);
+    print('DateTime.now()');
+    print(DateFormat('HH:mm').format(DateTime.now()));
     late double offsety = 0;
     final deviceheigh = MediaQuery.of(context).size.height;
     // ---------------------
@@ -87,7 +90,58 @@ class GridLayoutOneProduct extends HookConsumerWidget {
                 // ref
                 //     .read(productDetailNotifierProvider.notifier)
                 //     .getProductDetailproductId(searchingKey: ProductData.productId!);
+                // await ref.read(API.click).createClick(
+                //     clickName:
+                //         '${ProductData.restaurantName} - ${ProductData.productName}',
+                //     clickingTiming: [DateTime.now().toIso8601String()],
+                //     monitoringDay: DateTime.now().toIso8601String(),
+                //     productId: 'productId',
+                //     productName: 'productName',
+                //     restaurantId: 'restaurantId',
+                //     restaurantName: 'restaurantName');
+                // ----------------------------------------
+                // ref.read(AppStateProvider.clickNotifier.notifier).addTimeClick(
+                //     clickName:
+                //         '${ProductData.restaurantName} - ${ProductData.productName}',
+                //     clickingTiming: DateFormat('HH:mm').format(DateTime.now()));
+                // ---------------------------------------------------------
+                // ref.read(AppStateProvider.clickNotifier.notifier).createClick(
+                //     clickName:
+                //         '${ProductData.restaurantName} - ${ProductData.productName}',
+                //     clickingTiming: DateFormat('HH:mm').format(DateTime.now()),
+                //     monitoringDay:
+                //         DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                //     productId: ProductData.productId!,
+                //     productName: ProductData.productName!,
+                //     restaurantId: ProductData.restaurantId!,
+                //     restaurantName: ProductData.restaurantName!);
+// ------------------------------------------
+                // await ref
+                //     .read(AppStateProvider.clickNotifier.notifier)
+                //     .createClick(
+                //         clickName: 'test1',
+                //         clickingTiming: [
+                //           DateFormat(' kk:mm').format(DateTime.now())
+                //         ],
+                //         monitoringDay: DateTime.now(),
+                //         productId: 'productId',
+                //         productName: 'productName',
+                //         restaurantId: 'restaurantId',
+                //         restaurantName: 'restaurantName');
 
+                // -------------------------------------
+
+                await ref.read(API.click).checkAvailableClick(
+                    clickName:
+                        '${ProductData.restaurantName} - ${ProductData.productName}',
+                    clickingTiming: DateFormat('HH:mm').format(DateTime.now()),
+                    monitoringDay:
+                        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                    productId: ProductData.productId!,
+                    productName: ProductData.productName!,
+                    restaurantId: ProductData.restaurantId!,
+                    restaurantName: ProductData.restaurantName!);
+                // --------------------
                 await ref
                     .read(AppStateProvider.productdetailMapNotifier.notifier)
                     .addItem(productId: ProductData.productId!);

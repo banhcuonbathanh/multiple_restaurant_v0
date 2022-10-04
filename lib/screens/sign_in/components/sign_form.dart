@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:socket_io_client/socket_io_client.dart';
+import 'package:untitled1/app_provider/api_provider.dart';
 
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
@@ -17,6 +20,7 @@ import 'package:untitled1/screens/home/home_screen.dart';
 import '../../../size_config.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:socket_io_client/socket_io_client.dart' as Io;
 
 class SignForm extends HookConsumerWidget {
   SignForm({Key? key}) : super(key: key);
@@ -37,6 +41,34 @@ class SignForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ---------------------------------
+// socket Io
+    late Io.Socket socket;
+    void connectAndListen() {
+      socket = Io.io('http://127.0.0.1:3000',
+          Io.OptionBuilder().setTransports(['websocket']).build());
+      print('docket io');
+      socket.onConnect((_) {
+        print(';socket on coneection');
+      });
+      socket.emit('add_user', 'sing in screen');
+      // -----------
+      socket.on('receiveOrder', (data) async {
+        // await service.showNotification(
+        //     id: 0,
+        //     title: ' notiication titleasfdasdf',
+        //     body: ' some nidy111111111111111');
+      });
+      // --------------
+      socket.onDisconnect((_) => print('disconnect'));
+    }
+
+    useEffect(() {
+      // connectAndListen();
+      return () {};
+    });
+    // --------------------------------------
+    // ------------------------------
     final hasInternet = useState<bool>(false);
     ConnectivityResult resultConnectivity = ConnectivityResult.none;
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -126,6 +158,22 @@ class SignForm extends HookConsumerWidget {
               // }
             },
           ),
+          ElevatedButton(
+              onPressed: () async {
+                final Dio dio = Dio();
+                try {
+                  // print('/test1');
+                  // await dio.post('http://127.0.0.1:3000/test', data: {});
+                  // print('/test2');
+                  connectAndListen();
+                  await ref.read(API.user).createUser(
+                      userEmail: 'userEmail', userPassword: 'userPassword');
+                  print('/test2');
+                } on DioError catch (e) {
+                  throw Exception(' failed to create post');
+                }
+              },
+              child: Text(' test docker')),
           ElevatedButton(
               onPressed: () async {
                 hasInternet.value =

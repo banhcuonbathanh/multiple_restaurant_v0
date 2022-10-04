@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:untitled1/app_state/categories_state.dart';
+import 'package:untitled1/app_state/click_state.dart';
 import 'package:untitled1/app_state/order_state.dart';
 import 'package:untitled1/app_state/order_test_state.dart';
 
@@ -14,6 +15,7 @@ import 'package:untitled1/app_state/topping_edit_state%20Map.dart';
 
 import 'package:untitled1/app_state/user_state.dart';
 import 'package:untitled1/model/category_model.dart';
+import 'package:untitled1/model/click_model.dart';
 import 'package:untitled1/model/order_model.dart';
 
 import 'package:untitled1/model/product_model.dart';
@@ -64,6 +66,8 @@ abstract class AppStateProvider {
       get orderTestNotifier => orderTestNotifier1;
   static StateNotifierProvider<OrderAnalyticState, Map<String, OrderModel>>
       get orderAnalytic => _orderAnalytic;
+  static StateNotifierProvider<ClickState, Map<String, ClickModel>>
+      get clickNotifier => _clickState;
 }
 
 final _userNotifier = StateNotifierProvider<UserState, UserModel?>((ref) {
@@ -148,6 +152,12 @@ final orderTestNotifier1 =
 final _orderAnalytic =
     StateNotifierProvider<OrderAnalyticState, Map<String, OrderModel>>((ref) {
   return OrderAnalyticState(
+    ref.read,
+  );
+});
+final _clickState =
+    StateNotifierProvider<ClickState, Map<String, ClickModel>>((ref) {
+  return ClickState(
     ref.read,
   );
 });

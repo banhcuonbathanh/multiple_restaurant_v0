@@ -61,7 +61,6 @@ class OrderTestState extends StateNotifier<Map<String, OrderModel>> {
       } else {
         dataLocal.putIfAbsent(response1.orderId, () => response1);
         state = dataLocal;
-        print(state);
       }
       // print('state');
       // print(state);

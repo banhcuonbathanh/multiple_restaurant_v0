@@ -85,7 +85,7 @@ class APIUser {
     // });
     try {
       final response =
-          await dio.post('http://127.0.0.1:3000/user/createUser', data: {
+          await dio.post('http://127.0.0.1:3000/api/user/createUser', data: {
         'userEmail': userEmail,
         'userPassword': userPassword,
       });
