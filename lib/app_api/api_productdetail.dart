@@ -9,11 +9,15 @@ import 'package:untitled1/exception/repository_exception.dart';
 import 'package:untitled1/model/productdetail_model.dart';
 import 'package:untitled1/utils.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIProductDetail {
   final Reader read;
   final Dio dio = Dio();
 
-  APIProductDetail(this.read);
+  APIProductDetail(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+  }
 
   // --------------------------------------------------------------------------
   Future<String> createFolderProductDetailImage({

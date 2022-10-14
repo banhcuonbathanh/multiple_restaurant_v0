@@ -3,11 +3,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:untitled1/model/click_model.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIClick {
   final Dio dio = Dio();
   final Reader read;
 
-  APIClick(this.read);
+  APIClick(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
+  }
   Future<void> createClick({
     required String clickName,
     required String clickingTiming,

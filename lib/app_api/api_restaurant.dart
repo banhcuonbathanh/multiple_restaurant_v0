@@ -2,10 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:untitled1/model/restaurant_model.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIRestaurant {
+  final Reader read;
   final Dio dio = Dio();
+
+  APIRestaurant(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
+  }
 
   Future<String> uploadImage(
       {required ValueNotifier<File?> imageLink,

@@ -96,7 +96,9 @@ class CustomBottomNavBar extends HookConsumerWidget {
                         : inActiveIconColor,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, HomeScreen.routeName);
+                    if (MenuState.home != selectedMenu) {
+                      Navigator.pushNamed(context, HomeScreen.routeName);
+                    }
                   }),
               IconButton(
                 icon: SvgPicture.asset(
@@ -107,10 +109,13 @@ class CustomBottomNavBar extends HookConsumerWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () async {
-                  await ref
-                      .read(AppStateProvider.productdetailMapNotifier.notifier)
-                      .addItemFavaoriteFromServer(userId: user!.userId!);
-                  Navigator.pushNamed(context, CartScreen.routeName);
+                  if (MenuState.favourite != selectedMenu) {
+                    await ref
+                        .read(
+                            AppStateProvider.productdetailMapNotifier.notifier)
+                        .addItemFavaoriteFromServer(userId: user!.userId!);
+                    Navigator.pushNamed(context, CartScreen.routeName);
+                  }
                 },
               ),
               IconButton(
@@ -121,30 +126,34 @@ class CustomBottomNavBar extends HookConsumerWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () async {
-                  // print('user!.restaurantId!');
-                  // print(user!.restaurantId!);
-                  if (user!.restaurantId != null && user.restaurantId != '') {
-                    await ref
-                        .read(AppStateProvider.restaurantEditNotifier.notifier)
-                        .searchRestaurantsUserId(
-                            restaurantId: user.restaurantId!);
-                    await ref
-                        .read(AppStateProvider.productEditNotifier.notifier)
-                        .searchingProductsOfRestaurantUserId(
-                            searchingKey: user.restaurantId!);
-                  }
+                  if (MenuState.message != selectedMenu) {
+                    if (user!.restaurantId != null && user.restaurantId != '') {
+                      await ref
+                          .read(
+                              AppStateProvider.restaurantEditNotifier.notifier)
+                          .searchRestaurantsUserId(
+                              restaurantId: user.restaurantId!);
+                      await ref
+                          .read(AppStateProvider.productEditNotifier.notifier)
+                          .searchingProductsOfRestaurantUserId(
+                              searchingKey: user.restaurantId!);
+                    }
 // ----------------
 
-                  final orderTest = await ref
-                      .read(AppStateProvider.orderTestNotifier.notifier)
-                      .searchingorderByBuyingUserId(
-                        BuyingUserId: user.userId!,
-                        numberOfOrder: 0,
-                        page: 0,
-                        statusOrder: 'dat hang',
-                      );
+                    final orderTest = await ref
+                        .read(AppStateProvider.orderTestNotifier.notifier)
+                        .searchingorderByBuyingUserId(
+                          BuyingUserId: user.userId!,
+                          numberOfOrder: 0,
+                          page: 0,
+                          statusOrder: 'dat hang',
+                        );
 // -------------------------------------
-                  Navigator.pushNamed(context, ManageRestaurantBody.routeName);
+                    Navigator.pushNamed(
+                        context, ManageRestaurantBody.routeName);
+                  }
+                  // print('user!.restaurantId!');
+                  // print(user!.restaurantId!);
                 },
               ),
               IconButton(
@@ -155,9 +164,11 @@ class CustomBottomNavBar extends HookConsumerWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () {
+                  if (MenuState.profile != selectedMenu) {
+                    Navigator.of(context)
+                        .push(CustomPageRoute(child: ProfileScreen()));
+                  }
                   // Navigator.pushNamed(context, ProfileScreen.routeName);
-                  Navigator.of(context)
-                      .push(CustomPageRoute(child: ProfileScreen()));
                 },
               ),
             ],

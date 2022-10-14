@@ -1,15 +1,19 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
-import 'package:untitled1/model/product_model.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:untitled1/model/topping_model.dart';
+
+import '../helper/dio_inteceptor.dart';
 
 class APITopping {
   final Dio dio = Dio();
+  final Reader read;
 
+  APITopping(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
+  }
   // --------------------------------------------------------------------------
   // Future<String> createFolderProductImage({
   //   // required String category,

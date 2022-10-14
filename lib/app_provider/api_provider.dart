@@ -29,28 +29,28 @@ final _user = Provider<APIUser>((ref) {
 });
 
 final _restaurant = Provider<APIRestaurant>((ref) {
-  return APIRestaurant();
+  return APIRestaurant(ref.read);
 });
 
 final _product = Provider<APIProduct>((ref) {
-  return APIProduct();
+  return APIProduct(ref.read);
 });
 
 final _productdetail = Provider<APIProductDetail>((ref) {
   return APIProductDetail(ref.read);
 });
 final _topping = Provider<APITopping>((ref) {
-  return APITopping();
+  return APITopping(ref.read);
 });
 final _order = Provider<APIOrder>((ref) {
-  return APIOrder();
+  return APIOrder(ref.read);
 });
 
 final _socket = Provider<APISocket>((ref) {
   return APISocket(read: ref.read);
 });
 final _category = Provider<APICategory>((ref) {
-  return APICategory();
+  return APICategory(ref.read);
 });
 final _orderTest = Provider<APIOrderTest>((ref) {
   return APIOrderTest(ref.read);

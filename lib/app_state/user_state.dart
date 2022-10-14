@@ -245,12 +245,14 @@ class UserState extends StateNotifier<UserModel> {
     List<RestaurantModel> restaurantsDataPromotion = [];
 
     try {
+      final userFromBackend = await read(API.user)
+          .signIn(userEmail: userEmail, userPassword: userPassword);
+
       // state = const AsyncValue.loading();
       final getallCategory =
           await read(AppStateProvider.categoriesNotifier.notifier)
               .getAllCategories();
-      final userFromBackend = await read(API.user)
-          .signIn(userEmail: userEmail, userPassword: userPassword);
+
       final orderTest = await read(AppStateProvider.orderTestNotifier.notifier)
           .searchingorderByBuyingUserId(
         BuyingUserId: userFromBackend.userId!,

@@ -38,7 +38,8 @@ class CustomerButton extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(fontSize ?? 14),
+                fontSize: getProportionateScreenWidth(
+                    fontSize ?? getProportionateScreenHeight(buttonHeight - 6)),
                 color: backgoundColor == null
                     ? Colors.white
                     : Colors.grey.shade600,

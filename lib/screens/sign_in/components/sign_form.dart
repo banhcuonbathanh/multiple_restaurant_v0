@@ -45,7 +45,7 @@ class SignForm extends HookConsumerWidget {
 // socket Io
     late Io.Socket socket;
     void connectAndListen() {
-      socket = Io.io('http://127.0.0.1:3000',
+      socket = Io.io('http://127.0.0.1:8080',
           Io.OptionBuilder().setTransports(['websocket']).build());
       print('docket io');
       socket.onConnect((_) {
@@ -162,13 +162,19 @@ class SignForm extends HookConsumerWidget {
               onPressed: () async {
                 final Dio dio = Dio();
                 try {
-                  // print('/test1');
-                  // await dio.post('http://127.0.0.1:3000/test', data: {});
-                  // print('/test2');
                   connectAndListen();
-                  await ref.read(API.user).createUser(
-                      userEmail: 'userEmail', userPassword: 'userPassword');
-                  print('/test2');
+                  // print('/test1');
+                  // http://127.0.0.1:50532
+                  // await dio.post('http://127.0.0.1:8080/test', data: {});
+                  var test = await dio.post(
+                    'http://127.0.0.1:8080/test',
+                  );
+                  // await dio.get('http://127.0.0.1:5000/');
+                  // print('/test2');
+
+                  // await ref.read(API.user).createUser(
+                  //     userEmail: 'userEmail', userPassword: 'userPassword');
+                  // print('/test2');
                 } on DioError catch (e) {
                   throw Exception(' failed to create post');
                 }

@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:untitled1/helper/dio_inteceptor.dart';
 import 'package:untitled1/model/category_model.dart';
 
 class APICategory {
+  final Reader read;
   final Dio dio = Dio();
-
+  APICategory(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+  }
   Future<CategoryModel> createCategory(
       {required String categoryImage,
       required String categoryName,

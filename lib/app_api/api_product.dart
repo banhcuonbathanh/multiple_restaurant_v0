@@ -3,12 +3,19 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:untitled1/model/product_model.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIProduct {
   final Dio dio = Dio();
-
+  final Reader read;
+  APIProduct(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
+  }
   // --------------------------------------------------------------------------
   Future<String> createFolderProductImage({
     // required String category,

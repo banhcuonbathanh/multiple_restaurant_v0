@@ -57,53 +57,55 @@ class Body extends HookConsumerWidget {
     }
 
     return SafeArea(
-      child: Column(
-        children: [
-          ProfilePic(),
-          SizedBox(height: 20),
-          ProfileMenu(
-            text: "My Account",
-            icon: "assets/icons/User Icon.svg",
-            press: () => {},
-          ),
-          ProfileMenu(
-            text: "Notifications",
-            icon: "assets/icons/Bell.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Help Center",
-            icon: "assets/icons/Question mark.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Log Out",
-            icon: "assets/icons/Log out.svg",
-            press: () {
-              Navigator.pushNamed(context, SignInScreen.routeName);
-            },
-          ),
-          ElevatedButton(
-              onPressed: () {
-                ref.read(API.socket).sign_in(userId: user!.userId!);
-                // socket.on('fromserver', (data) => print(data));
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProfilePic(),
+            SizedBox(height: 20),
+            ProfileMenu(
+              text: "My Account",
+              icon: "assets/icons/User Icon.svg",
+              press: () => {},
+            ),
+            ProfileMenu(
+              text: "Notifications",
+              icon: "assets/icons/Bell.svg",
+              press: () {},
+            ),
+            ProfileMenu(
+              text: "Settings",
+              icon: "assets/icons/Settings.svg",
+              press: () {},
+            ),
+            ProfileMenu(
+              text: "Help Center",
+              icon: "assets/icons/Question mark.svg",
+              press: () {},
+            ),
+            ProfileMenu(
+              text: "Log Out",
+              icon: "assets/icons/Log out.svg",
+              press: () {
+                Navigator.pushNamed(context, SignInScreen.routeName);
               },
-              child: Text('sign_in')),
-          ElevatedButton(
-              onPressed: () {
-                ref.read(API.socket).sendMessage(
-                    userId: user!.userId!,
-                    orderId: '123456789',
-                    receiveId: '123456789');
-                // socket.on('fromserver', (data) => print(data));
-              },
-              child: Text('sendMessage')),
-        ],
+            ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       ref.read(API.socket).sign_in(userId: user!.userId!);
+            //       // socket.on('fromserver', (data) => print(data));
+            //     },
+            //     child: Text('sign_in')),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       ref.read(API.socket).sendMessage(
+            //           userId: user!.userId!,
+            //           orderId: '123456789',
+            //           receiveId: '123456789');
+            //       // socket.on('fromserver', (data) => print(data));
+            //     },
+            //     child: Text('sendMessage')),
+          ],
+        ),
       ),
     );
   }

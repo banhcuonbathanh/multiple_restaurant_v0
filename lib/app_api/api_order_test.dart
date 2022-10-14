@@ -12,11 +12,15 @@ import 'package:untitled1/model/productdetail_model.dart';
 import 'package:untitled1/model/topping_model.dart';
 import 'package:untitled1/utils.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIOrderTest {
   final Reader read;
   final Dio dio = Dio();
 
-  APIOrderTest(this.read);
+  APIOrderTest(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+  }
 
   // --------------------------------------------------------------------------
   Future<OrderModel> createOrderTest({

@@ -79,10 +79,7 @@ class thoigiannhanHang extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restart = useState(true);
-    // final restaurantsData =
-    //     widget.ref.watch(AppStateProvider.restaurantNotifier);
-    // final restaurantData = restaurantsData!
-    //     .firstWhere((element) => element.restaurantId == widget.restaurantId);
+
     final CurrentTime = DateTime.parse(DateTime.now().toString());
     final currentHour = CurrentTime.hour;
     final currentMinut = CurrentTime.minute;
@@ -111,7 +108,8 @@ class thoigiannhanHang extends HookConsumerWidget {
                   color: (isTodaySelective.value == false &&
                           isTomorrowSelective.value == false)
                       ? Colors.red
-                      : Colors.black),
+                      : Colors.black,
+                  fontSize: getProportionateScreenHeight(16)),
             ),
             if (restaurantData.restaurantEndingTime!.toInt() > currentHour)
               CustomerButton(

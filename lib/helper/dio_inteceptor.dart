@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
-import 'package:untitled1/components/snackbarcontent.dart';
 
 class DioInterceptor extends Interceptor {
   final Reader read;
@@ -10,6 +9,7 @@ class DioInterceptor extends Interceptor {
   DioInterceptor(this.read);
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    print('onRequest trong DioInterceptor');
     // TODO: implement onRequest
     read(Utility.isLoading.notifier).isLoading(isLoading: true);
     // print('REQUEST[${options.method}] => PATH: ${options.path}');
@@ -22,7 +22,7 @@ class DioInterceptor extends Interceptor {
   //           .addError(error: 'Mật Khẩu Dài Hơn 6 Kí Tự');
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print('responseresponseresponse');
+    print('responseresponseresponse from DioInterceptor');
 
     super.onResponse(response, handler);
   }
@@ -31,7 +31,7 @@ class DioInterceptor extends Interceptor {
   void onError(DioError err, ErrorInterceptorHandler handler) {
     read(Utility.isLoading.notifier).isLoading(isLoading: false);
 
-    print('errerrerrerrerrerrerr');
+    print('errerrerrerrerrerrerr DioInterceptorDioInterceptor');
     print(err.response.toString());
     print(err.response.toString() == 'Incorrect username');
     print(err.error);

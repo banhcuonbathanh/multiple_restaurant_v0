@@ -30,20 +30,12 @@ class CustomerOrderingInformation extends HookConsumerWidget {
         children: [
           Text('   Thông Tin Đặt Hàng:', style: TextStyle(color: Colors.black)),
           Text('   Địa Chỉ: ${user!.userAdrress}'),
-
           Text('   Số Điện Thoại: ${user.userPhone}'),
-
           Timingorder(
               recevingHour: recevingHour,
               recevingMinute: recevingMinute,
               recevingDay: recevingDay,
               restaurantId: restaurantId),
-          // TimeOrdering(
-          //   recevingHour: recevingHour,
-          //   recevingMinute: recevingMinute,
-          //   recevingDay: recevingDay,
-          //   restaurantId: '',
-          // ),
           if (!isShowNewAddress.value)
             DiaChiMoi(
                 tenSanPhamController: newAdressController,

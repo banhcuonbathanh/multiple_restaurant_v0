@@ -1,12 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:untitled1/model/order_model.dart';
 
 import 'package:untitled1/model/productdetail_model.dart';
 import 'package:untitled1/model/topping_model.dart';
 
+import '../helper/dio_inteceptor.dart';
+
 class APIOrder {
   final Dio dio = Dio();
+  final Reader read;
+  APIOrder(this.read) {
+    dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
+  }
 // -------------------------------
 
   // APIOrder() {

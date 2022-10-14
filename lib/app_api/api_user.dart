@@ -18,6 +18,7 @@ class APIUser {
 
   APIUser(this.read) {
     dio.interceptors.add(DioInterceptor(read));
+    print('trong APIUser check DioInterceptor');
   }
   // APIUser() {
   // dio.interceptors.add(DioInterceptor());
@@ -85,7 +86,7 @@ class APIUser {
     // });
     try {
       final response =
-          await dio.post('http://127.0.0.1:3000/api/user/createUser', data: {
+          await dio.post('http://127.0.0.1:8080/api/user/createUser', data: {
         'userEmail': userEmail,
         'userPassword': userPassword,
       });
