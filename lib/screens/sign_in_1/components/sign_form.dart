@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:untitled1/app_provider/api_provider.dart';
 
 import 'package:untitled1/app_provider/state_provider.dart';
 import 'package:untitled1/app_provider/utility_provider.dart';
@@ -23,209 +22,112 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:socket_io_client/socket_io_client.dart' as Io;
 
 class SignForm extends HookConsumerWidget {
-  SignForm({Key? key}) : super(key: key);
-
-  void addError({String? error}) {
-    // if (!errors.contains(error))
-    // setState(() {
-    //   errors.add(error);
-    // });
-  }
-
-  void removeError({String? error}) {
-    // if (errors.contains(error))
-    //   setState(() {
-    //     errors.remove(error);
-    //   });
-  }
+  const SignForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ---------------------------------
-// socket Io
-    late Io.Socket socket;
-    void connectAndListen() {
-      socket = Io.io('http://127.0.0.1:62173',
-          Io.OptionBuilder().setTransports(['websocket']).build());
-      print('docket io');
-      socket.onConnect((_) {
-        print(';socket on coneection');
-      });
-      socket.emit('add_user', 'sing in screen');
-      // -----------
-      socket.on('receiveOrder', (data) async {
-        // await service.showNotification(
-        //     id: 0,
-        //     title: ' notiication titleasfdasdf',
-        //     body: ' some nidy111111111111111');
-      });
-      // --------------
-      socket.onDisconnect((_) => print('disconnect'));
-    }
-
-    useEffect(() {
-      // connectAndListen();
-      return () {};
-    });
-    // --------------------------------------
-    // ------------------------------
-    final hasInternet = useState<bool>(false);
-    ConnectivityResult resultConnectivity = ConnectivityResult.none;
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final userEmail = useTextEditingController();
+
     final userPassword = useTextEditingController();
+
     final errorList = ref.watch(Utility.error);
-    final user = ref.watch(AppStateProvider.userNotifier);
-    // ref.listen<String?>(error1, (previous, next) {});
-    useEffect(() {
-      InternetConnectionChecker().onStatusChange.listen((status) {
-        final hasInternet1 = status == InternetConnectionStatus.connected;
-        hasInternet.value = hasInternet1;
-      });
-      return () {};
-    });
-//     late IO.Socket socket;
-// // ---------------------
+// CHECK INTERNET
+    final hasInternet = useState<bool>(false);
+    ConnectivityResult resultConnectivity = ConnectivityResult.none;
+    // useEffect(() {
+    //   InternetConnectionChecker().onStatusChange.listen((status) {
+    //     final hasInternet1 = status == InternetConnectionStatus.connected;
+    //     hasInternet.value = hasInternet1;
+    //   });
+    //   return () {};
+    // });
 
-//     void connectAndListen({required String userId}) {
-//       socket = IO.io(
-//         'http://127.0.0.1:3000',
-//         OptionBuilder().setTransports(['websocket']).build(),
-//       );
-//       socket.onConnect((_) {
-//         socket.emit('sign_in', userId);
-//       });
-//       socket.onDisconnect((_) => print('disconnect'));
-//     }
-// // ------------------------
-
+    // ----------------
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          buildTextFormFieldEmail(userEmail: userEmail, ref: ref),
-          // buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildPassFormField(ref: ref, userPassword: userPassword),
-          // buildPasswordFormField(),
+          EmailForm(
+            ref: ref,
+            userEmail: userEmail,
+          ),
+          SizedBox(
+            height: getProportionateScreenHeight(30),
+          ),
+          PasswordForm(
+            ref: ref,
+            userPassword: userPassword,
+          ),
           SizedBox(height: getProportionateScreenHeight(15)),
           (errorList != null && errorList.length > 0)
               ? FormError(errors: errorList)
               : SizedBox(
                   height: getProportionateScreenHeight(30),
                 ),
-
-          SizedBox(height: getProportionateScreenHeight(5)),
-          DefaultButton(
-            text: "Continue",
-            press: () async {
-              // final user = await ref
-              //     .read(AppStateProvider.userNotifier.notifier)
-              //     .singIn_Controller(
-              //         userEmail: userEmail.text,
-              //         userPassword: userPassword.text);
-
-              // Navigator.pushNamed(context, HomeScreen.routeName);
-              // ------------------------
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-
-                // ref.read(Utility.isLoading.notifier).isLoading(isLoading: true);
-                final user = await ref
-                    .read(AppStateProvider.userNotifier.notifier)
-                    .singIn_Controller(
-                        userEmail: userEmail.text,
-                        userPassword: userPassword.text);
-                if (user!.userEmail != '') {
-                  print('userasdfasdfsdf');
-                  print(user);
-                  print(user.userName != '');
-                  Navigator.of(context)
-                      .push(CustomPageRoute(child: HomeScreen()));
-                } else {
-                  return;
-                }
-                // ref
-                //     .read(Utility.isLoading.notifier)
-                //     .isLoading(isLoading: false);
-
-                // Navigator.pushNamed(context, HomeScreen.routeName);
-
-                // Navigator.of(context).push(PageRouteBuilder(
-                //     pageBuilder: (context, animation, secondaryAnimation) {
-                //       return HomeScreen();
-                //     },
-                //     opaque: false));
-                ref.read(Utility.error.notifier).removeAllErrors();
-              } else {
-                print(_formKey.currentState!.validate());
-              }
-              // ------------------------
-              // if (!_formKey.currentState!.validate()) {
-              //   print('not valie');
-              // }
-            },
+          ContinueButton(
+            formKey: _formKey,
+            userEmail: userEmail,
+            userPassword: userPassword,
+            ref: ref,
           ),
-          ElevatedButton(
-              onPressed: () async {
-                final Dio dio = Dio();
-                try {
-                  // connectAndListen();
-                  // print('/test1');
-                  // http://127.0.0.1:50532
-                  // await dio.post('http://127.0.0.1:8080/test', data: {});
-                  // var test = await dio.post(
-                  //   'http://127.0.0.1:8080/test',
-                  // );
-                  var test = await dio.post(
-                    'http://127.0.0.1:8080/api/user/createUser',
-                    data: {'userEmail': " useremail from local"},
-                  );
-
-                  // var test = await dio.post(
-                  //   'http://14.225.27.169:8080/api/user/createUser',
-                  // );
-                  // var test = await dio.post(
-                  //   'http://127.0.0.1:49951/api/user/createUser',
-                  //   data: {'userEmail': " useremail from local"},
-                  // );
-                  // await dio.get('http://127.0.0.1:5000/');
-                  // print('/test2');
-
-                  // await ref.read(API.user).createUser(
-                  //     userEmail: 'userEmail', userPassword: 'userPassword');
-                  // print('/test2');
-                } on DioError catch (e) {
-                  throw Exception(' failed to create post');
-                }
-              },
-              child: Text(' test docker')),
-          ElevatedButton(
-              onPressed: () async {
-                hasInternet.value =
-                    await InternetConnectionChecker().hasConnection;
-                resultConnectivity = await Connectivity().checkConnectivity();
-
-                if (resultConnectivity == ConnectivityResult.mobile) {
-                  showSimpleNotification(Text(' mobile network'));
-                } else if (resultConnectivity == ConnectivityResult.wifi) {
-                  showSimpleNotification(Text(' wifi network'));
-                } else {
-                  showSimpleNotification(Text(' no network'));
-                }
-                // final message = hasInternet.value
-                //     ? 'intenet available'
-                //     : 'internet is not available';
-                // showSimpleNotification(Text(message));
-              },
-              child: Text(' check internet'))
         ],
       ),
     );
   }
+}
 
-  Widget buildPassFormField(
-      {required TextEditingController userPassword, required WidgetRef ref}) {
+class ContinueButton extends StatelessWidget {
+  const ContinueButton({
+    Key? key,
+    required GlobalKey<FormState> formKey,
+    required this.userEmail,
+    required this.userPassword,
+    required this.ref,
+  })  : _formKey = formKey,
+        super(key: key);
+
+  final GlobalKey<FormState> _formKey;
+  final TextEditingController userEmail;
+  final TextEditingController userPassword;
+  final WidgetRef ref;
+  @override
+  Widget build(BuildContext context) {
+    return DefaultButton(
+      text: "Continue",
+      press: () async {
+        if (_formKey.currentState!.validate()) {
+          _formKey.currentState!.save();
+          final user = await ref
+              .read(AppStateProvider.userNotifier.notifier)
+              .singIn_Controller(
+                  userEmail: userEmail.text, userPassword: userPassword.text);
+          if (user!.userEmail != '') {
+            Navigator.of(context).push(CustomPageRoute(child: HomeScreen()));
+          } else {
+            return;
+          }
+
+          ref.read(Utility.error.notifier).removeAllErrors();
+        } else {
+          print(_formKey.currentState!.validate());
+        }
+      },
+    );
+  }
+}
+
+class PasswordForm extends StatelessWidget {
+  final TextEditingController userPassword;
+  final WidgetRef ref;
+  const PasswordForm({
+    Key? key,
+    required this.userPassword,
+    required this.ref,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       controller: userPassword,
       keyboardType: TextInputType.text,
@@ -290,14 +192,24 @@ class SignForm extends HookConsumerWidget {
       ),
     );
   }
+}
 
-  Widget buildTextFormFieldEmail(
-      {required TextEditingController userEmail, required WidgetRef ref}) {
+class EmailForm extends StatelessWidget {
+  final TextEditingController userEmail;
+  final WidgetRef ref;
+  const EmailForm({
+    Key? key,
+    required this.userEmail,
+    required this.ref,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       controller: userEmail,
       keyboardType: TextInputType.emailAddress,
       onChanged: (value) {
-        ref.read(Utility.error.notifier).removeAllErrors();
+        // ref.read(error_State_Provider.notifier).removeAllErrors();
       },
       onSaved: (value) {
         userEmail.text = value!;
