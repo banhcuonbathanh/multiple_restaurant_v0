@@ -6,6 +6,8 @@ import 'package:untitled1/model/product_model.dart';
 import 'package:untitled1/screens/home/components/product_detail_modal_sheet_home/product_detail_list_home.dart';
 import 'package:untitled1/size_config.dart';
 
+import 'title_filter.dart';
+
 class ItemFilterProduct extends HookConsumerWidget {
   const ItemFilterProduct({
     Key? key,
@@ -18,32 +20,11 @@ class ItemFilterProduct extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            height: getProportionateScreenHeight(30),
-            decoration: BoxDecoration(
-              // color: Colors.white,
-              color: Colors.white.withOpacity(1),
-              // kSecondaryColor,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            width: double.infinity,
-            child: Row(
-              children: [
-                Text(
-                  '    ${title}',
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.7), fontSize: 14),
-                ),
-                IconButton(
-                    onPressed: () {}, icon: Icon(Icons.chevron_left_sharp))
-              ],
-            ),
-          ),
+          TitleFilter(title: title),
           Container(
             decoration: BoxDecoration(
               // color: Colors.white,

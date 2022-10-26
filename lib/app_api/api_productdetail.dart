@@ -380,7 +380,7 @@ class APIProductDetail {
     //   'restaurantId': restaurantId,
     // });
     try {
-      final response = await dio.post(
+      await dio.post(
           'http://127.0.0.1:3000/productDetail/deleteAllProductDetailOfRestaurant/',
           data: {
             'restaurantId': restaurantId,

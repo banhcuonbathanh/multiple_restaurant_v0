@@ -16,7 +16,7 @@ import '../../../../size_config.dart';
 import 'item_filter_product.dart';
 
 class HomeHeaderFilter extends HookConsumerWidget {
-  HomeHeaderFilter({
+  const HomeHeaderFilter({
     required this.controller,
     Key? key,
   }) : super(key: key);

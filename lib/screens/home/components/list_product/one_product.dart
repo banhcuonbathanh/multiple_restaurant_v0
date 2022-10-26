@@ -27,8 +27,8 @@ class GridLayoutOneProduct extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('DateTime.now()');
-    print(DateFormat('HH:mm').format(DateTime.now()));
+    // print('DateTime.now()');
+    // print(DateFormat('HH:mm').format(DateTime.now()));
     late double offsety = 0;
     final deviceheigh = MediaQuery.of(context).size.height;
     // ---------------------

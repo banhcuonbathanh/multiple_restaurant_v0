@@ -65,7 +65,7 @@ class APIClick {
     required String restaurantId,
     required String restaurantName,
   }) async {
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>');
+  
     try {
       await dio.post('http://127.0.0.1:3000/click/checkAvailableClick/', data: {
         'clickName': clickName,
@@ -76,7 +76,7 @@ class APIClick {
         'restaurantId': restaurantId,
         'restaurantName': restaurantName,
       });
-      print('<<<<<<<<<<<<<<<<<<<<<<<');
+    
     } on DioError catch (e) {
       throw Exception(' failed to create post');
     }

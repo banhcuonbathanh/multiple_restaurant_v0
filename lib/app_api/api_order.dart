@@ -102,7 +102,7 @@ class APIOrder {
           await dio.post('http://127.0.0.1:3000/order/getOneOrderById/', data: {
         'orderId': orderId,
       });
-      print(response);
+  
       final productdetaullist =
           productDetailFromJson(response.data['productdetailsList']);
 
@@ -177,7 +177,7 @@ class APIOrder {
   // --------------------------------------------------------------------------
 
   Future<List<OrderModel>> getAllOrder() async {
-    print('getAllOrder');
+  
     try {
       final responses = await dio.post(
         'http://127.0.0.1:3000/order/getAllOrder/',
@@ -240,12 +240,12 @@ class APIOrder {
     //   'restaurantId': restaurantId,
     // });
     try {
-      final response = await dio.post(
+     await dio.post(
           'http://127.0.0.1:3000/product/deleteAllProductOfRestaurant/',
           data: {
             'restaurantId': restaurantId,
           });
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to create post');
     }
   }

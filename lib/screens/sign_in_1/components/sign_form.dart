@@ -45,7 +45,7 @@ class SignForm extends HookConsumerWidget {
 // socket Io
     late Io.Socket socket;
     void connectAndListen() {
-      socket = Io.io('http://127.0.0.1:8080',
+      socket = Io.io('http://127.0.0.1:62173',
           Io.OptionBuilder().setTransports(['websocket']).build());
       print('docket io');
       socket.onConnect((_) {
@@ -136,13 +136,21 @@ class SignForm extends HookConsumerWidget {
                     .singIn_Controller(
                         userEmail: userEmail.text,
                         userPassword: userPassword.text);
+                if (user!.userEmail != '') {
+                  print('userasdfasdfsdf');
+                  print(user);
+                  print(user.userName != '');
+                  Navigator.of(context)
+                      .push(CustomPageRoute(child: HomeScreen()));
+                } else {
+                  return;
+                }
                 // ref
                 //     .read(Utility.isLoading.notifier)
                 //     .isLoading(isLoading: false);
 
                 // Navigator.pushNamed(context, HomeScreen.routeName);
-                Navigator.of(context)
-                    .push(CustomPageRoute(child: HomeScreen()));
+
                 // Navigator.of(context).push(PageRouteBuilder(
                 //     pageBuilder: (context, animation, secondaryAnimation) {
                 //       return HomeScreen();
@@ -162,13 +170,25 @@ class SignForm extends HookConsumerWidget {
               onPressed: () async {
                 final Dio dio = Dio();
                 try {
-                  connectAndListen();
+                  // connectAndListen();
                   // print('/test1');
                   // http://127.0.0.1:50532
                   // await dio.post('http://127.0.0.1:8080/test', data: {});
+                  // var test = await dio.post(
+                  //   'http://127.0.0.1:8080/test',
+                  // );
                   var test = await dio.post(
-                    'http://127.0.0.1:8080/test',
+                    'http://127.0.0.1:8080/api/user/createUser',
+                    data: {'userEmail': " useremail from local"},
                   );
+
+                  // var test = await dio.post(
+                  //   'http://14.225.27.169:8080/api/user/createUser',
+                  // );
+                  // var test = await dio.post(
+                  //   'http://127.0.0.1:49951/api/user/createUser',
+                  //   data: {'userEmail': " useremail from local"},
+                  // );
                   // await dio.get('http://127.0.0.1:5000/');
                   // print('/test2');
 

@@ -35,7 +35,7 @@ class APIProduct {
       String imageFolderlinkinString = imageFolderlinkinMap['link'];
 
       return imageFolderlinkinString.substring(1);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to create restaurant');
     }
   }
@@ -47,11 +47,8 @@ class APIProduct {
     required String? productName,
     required String imageFoldeStore,
   }) async {
-    print('uploadProductImage');
-    print('imageLink.value');
-    print(imageLink.value);
-    print('imageFoldeStore');
-    print(imageFoldeStore);
+
+
     var formdata = FormData.fromMap(
       {
         'restaurantName': restaurantName,
@@ -129,7 +126,7 @@ class APIProduct {
       });
 
       return ProductModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to create product');
     }
   }
@@ -160,7 +157,7 @@ class APIProduct {
       final List<ProductModel> listProduct = productFromJson(response.data);
 
       return listProduct;
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to get category');
     }
   }
@@ -182,7 +179,7 @@ class APIProduct {
         'newProductImage': newProductImage,
         'productId': productId,
       });
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to create restaurant');
     }
   }
@@ -201,7 +198,7 @@ class APIProduct {
       });
 
       return ProductModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to create post');
     }
   }
@@ -256,7 +253,7 @@ class APIProduct {
       });
 
       return ProductModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       throw Exception(' failed to get one and update');
     }
   }
